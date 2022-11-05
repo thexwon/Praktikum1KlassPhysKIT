@@ -1,0 +1,1388 @@
+\documentclass[a4paper,oneside,BCOR12.5mm,DIV12]{scrartcl} %scrartcl
+
+% Klemmmappen-Korrektur: BCOR8.25mm
+
+% Schnellhefter-Korrektur: BCOR12.5mm
+
+\usepackage{scrpage2}
+
+
+
+%\usepackage[polutonikogreek,ngerman]{babel}
+
+\usepackage{ngerman}
+
+\usepackage[latin1]{inputenc}
+
+\usepackage{icomma}
+
+\usepackage{rotating}
+
+\usepackage{units}
+
+%\usepackage{psfrag}
+
+%\usepackage{subfigure}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% nur sofern benötigt:
+
+%\usepackage{float}
+
+%\restylefloat{figure}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\usepackage{amsmath,amssymb,amstext}
+
+\usepackage{graphicx}% für Graphiken
+
+
+
+\newcommand{\grad}{\ensuremath{^\circ}}
+
+\newcommand{\glref}[1]{Gl.\,\eqref{#1}}
+
+\newcommand{\eqtag}{\stepcounter{equation}\tag{\theequation}}
+
+\newcommand{\abs}[1]{\left|#1\right|}
+
+\newcommand{\bra}[1]{\left(#1\right)}
+
+\newcommand{\NOT}[1]{\overline{#1}}
+\newcommand{\OR}{\vee}
+\newcommand{\AND}{\wedge}
+\newcommand{\XOR}{~\underline{\OR}~}
+
+\newcommand{\eps}{\ensuremath{\varepsilon}}
+
+%\renewcommand{\phi}{\varphi}
+
+\renewcommand{\epsilon}{\varepsilon}
+
+\title{P1-63,64,65: Schaltlogik Vorbereitungshilfe}
+
+\author{Christian Barth (1196701), Christian Benz (1204880)}
+
+\date{24.01.2008}
+
+\pagestyle{scrheadings}
+
+\ihead{P1-63,64,65: Schaltlogik}
+
+\setheadsepline{0.5pt}
+
+\setfootsepline{0.5pt}
+
+\ifoot{}
+
+\ofoot{\pagemark}
+
+\cfoot{}
+
+\begin{document}
+
+\maketitle
+
+%---------------------------------------------------------------------------
+\tableofcontents
+\newpage
+
+%---------------------------------------------------------------------------
+% \listoffigures
+% \listoftables
+% \newpage
+
+%---------------------------------------------------------------------------
+\setcounter{section}{-1}
+
+\section{Einleitung}
+Diese Vorbereitungshilfe soll einen Überblick über den Versuch
+"`Schaltlogik"' und deren Hintergründe geben. Sie ist nicht als
+Vorlage für eine Vorbereitung gedacht und dazu auch nicht
+geeignet, da Sie stellenweise viel zu tief ins Detail geht und
+andernorts auf gewisse Feinheiten gezielter Fragestellungen des
+Versuchs nicht näher eingeht.\\ \\
+Die Nummerierung der Kapitel orientiert sich an der der
+Aufgabenstellung des Versuchs. Am Ende jedes Kapitels sind zur
+Überprüfung des Erlernten ein paar Fragen zusammengestellt, die
+man danach beantworten können sollte. Die Fragen dienen nur zur
+Selbstkontrolle und müssen nicht schriftlich in der Vorbereitung
+beantwortet werden!\\ \\
+Erfahrungsgemäß werden einige (teilweise offensichtliche) Fehler
+aus fremden Vorbereitungen von vielen Studenten besonders gerne in
+deren eigene Vorbereitung übernommen. Aus diesem Grund sind an
+manchen Stellen \textbf{Hinweise} auf diese Fehler gegeben.
+\subsection{Das Experimentierboard}
+In allen Versuchsteilen werden Schaltungen auf diesem
+Experimentierboard aufgebaut:
+\begin{center}\includegraphics[width=15cm]{Bilder/Schaltboard.jpg}\end{center}
+Die einzelnen Bereiche sind:
+\begin{enumerate}
+    \item Diodengatter: Hier werden die AND-/NOT-/OR-Gatter aus
+    Aufgabe 1 aufgebaut.
+    \item Schalter, Taster: Diese werden zum Eingeben der
+        Zustände \textbf{1} oder \textbf{0} benötigt.
+    \item Leuchtdioden: Zur Anzeige der Zustände der
+        aufgebauten Gatter/Schaltungen.
+    \item IC-Sockel: Hier werden die IC-Bausteine ab Aufgabe 2 eingesteckt und
+    verschaltet.
+    \item Taktgeber: Über diese Ausgänge kommen Taktsignale
+    unterschiedlicher Frequenz (abwechselnd \textbf{10101$\dots$}).
+    \item Widerstände: Diese werden im letzten Aufgabenteil
+    (Analog-Digital-Wandlung) zum Umwandeln von Spannungen in
+    Ströme benötigt.
+\end{enumerate}
+Zum Aufbau der Diodengatter befindet sich am Ende des nächsten
+Kapitels eine kurze Anleitung. Zur Verwendung der Schalter: Die
+Signale \textbf{1} (bzw. $\unit[5]{V}$) oder \textbf{0} (bzw.
+$\unit[0]{V}$) werden über Schalter in die Eingänge der Gatter
+bzw. ICs eingegeben, dazu schließt man diese folgendermaßen an:
+\begin{center}\includegraphics[height=6cm]{Bilder/Anschluss_Schalter.jpg}\end{center}
+Über jedem Schalter befinden sich drei Anschlüsse. Der oberste und
+unterste sind die Eingänge, hier wird die Versorgungsspannung
+VCC/$\unit[5]{V}$ (rotes Kabel) und Masse GND/$\unit[0]{V}$
+(schwarzes Kabel) eingesteckt. Der mittlere Anschluss (blaues
+Kabel) ist der Ausgang, er führt je nach Schalterstellung
+\textbf{0} oder \textbf{1}, wobei die Schalter antiintuitiv
+eingebaut wurden, d.h. steht der Schalter oben, wird das Signal am
+unteren Anschluss ausgegeben. (Vgl. obige Abbildung: Der rechte
+Schalter gibt \textbf{1} aus - die rechte Diode leuchtet.)
+
+
+\section{Gatter aus diskreten Bauelementen} %1
+Zum Einstieg werden logische Gatter in "`Dioden-Logik"' aufgebaut.
+Solche Gatter haben den Vorteil, dass sie sehr wenige Bauteile
+benötigen, jedoch wird nach jedem Gatter die Differenz zwischen
+der \emph{LOW}- und \emph{HIGH}-Schwelle geringer, da an den
+Dioden jeweils ein Teil der Spannung abfällt (siehe AND- und
+OR-Gatter). Daher können nur sehr wenige Dioden-Gatter
+hintereinander geschaltet werden, bis keine Unterscheidung
+zwischen \emph{LOW}- und \emph{HIGH}-Schwelle mehr möglich ist.
+Aus diesem Grund wird normalerweise \emph{TTL}
+("`Transistor-Transistor-"') oder \emph{CMOS}
+("`Complementary-Metal-Oxide-Semiconductor-"') Logik verwendet.
+Diese beiden Logikfamilien benötigen zwar signifikant mehr
+Bauteile, jedoch werden hier die Schaltpotentiale durch separate
+Ausgangsstufen konstant gehalten.
+
+
+\subsection{AND-Gatter} %1.1
+\begin{equation*}
+\begin{array}{cc|c}
+    A &   B &   C = A \AND B \\
+    \hline
+    0 &   0 &   0 \\
+    0 &   1 &   0 \\
+    1 &   0 &   0 \\
+    1 &   1 &   1 \\
+\end{array}
+\end{equation*}
+Die logische \emph{UND}-Verknüpfung ergibt nur dann \emph{HIGH},
+wenn alle Eingänge auf \emph{HIGH} (\textbf{1}) liegen. In allen
+anderen Fällen ist das Ergebnis \emph{LOW} (\textbf{0}). Diese
+Verknüpfung lässt sich als folgendes Dioden-Gatter verwirklichen:
+\begin{center}\includegraphics[height=5cm]{Schaltplaene/11_Dioden-AND-Gatter.pdf}\end{center}
+Liegt an einem der Eingänge (A, B) \textbf{0} an, so fließt Strom
+durch den Widerstand und die Diode(n). In Folge beobachtet man
+Spannungsabfälle entsprechend deren Widerstand (Spannungsteiler).
+Ist der Widerstand $R_1$ so gewählt, dass er deutlich größer als
+der Durchlasswiderstand der Dioden ist, so fällt fast die gesamte
+Spannung an ihm ab. Der Ausgang (C) ist somit auf niedrigem
+Potential \textbf{0}. Liegt jedoch an beiden Eingängen \textbf{1}
+an, so fließt kein Strom (alle Eingangspunkte der Schaltung auf
+gleichem Potential), es fällt daher auch keine Spannung ab und der
+Ausgang liegt auf \textbf{1}. Dadurch dass an den Eingängen zwei
+Dioden und nicht nur kleine Widerstände verwendet wurde, können
+Beeinflussungen zwischen den Eingängen verhindert werden: Falls
+ein Eingang auf \textbf{1} und der andere auf \textbf{0} liegt,
+ist immer eine der beiden Dioden in Sperrichtung angeschlossen und
+unterbindet somit den Stromfluss
+zwischen den beiden Eingängen.\\ \\
+Da der Durchlasswiderstand der Dioden größer Null ist, fällt an
+den Dioden auch in Durchlassrichtung ein kleiner Teil der Spannung
+ab, daher ist am Ausgang die \emph{LOW}- Schwelle etwas höher als
+am Eingang. Schließt man mehrere dieser Gatter hintereinander so
+steigt die \emph{LOW}- Schwelle immer weiter an. Folgende
+Schaltung wäre eine mögliche Realisierung des ANDs als TTL-Gatter,
+welche diese Probleme durch eine eigene Ausgangsstufe verhindert:
+\begin{center}\includegraphics[height=6cm]{Schaltplaene/11_AND_TTL.pdf}\end{center}
+\textbf{Hinweis:} Wenn an beiden Eingängen (A,B) \textbf{1}
+anliegt so fließt durch die Dioden kein Strom, es fällt an ihnen
+daher auch keine Spannung ab. Sie werden nicht in Sperrrichtung
+betrieben und ihr Sperrwiderstand hat hiermit auch nichts zu
+tun.\\ \\
+An Bauteilen fallen Spannungen ab, an Ein- und Ausgängen
+hingegen liegen Potentiale an.
+
+\subsection{NOT-Gatter} %1.2
+\begin{equation*}
+\begin{array}{c|c}
+A & B = \NOT A\\
+\hline
+0 & 1\\
+1 & 0\\
+\end{array}
+\end{equation*}
+Die logische \emph{NICHT}-Verknüpfung invertiert das
+Eingangssignal, eine \textbf{1} ergibt \textbf{0} und umgekehrt.
+Diese Verknüpfung lässt sich leicht mit einem Transistor aufbauen:
+\begin{center}\includegraphics[height=5cm]{Schaltplaene/12a_NOT-Gatter.pdf}\end{center}
+Liegt am Eingang (A) \textbf{1} an, so fließt ein
+Basis-Emitter-Strom. Der Transistor schaltet durch, sein
+Widerstand wird sehr gering. Am Spannungsteiler ($R3$, Transistor)
+überwiegt $R3$ stark und fast die gesamte Spannung fällt an ihm
+ab. Der Ausgang (B) ist damit auf \textbf{0}. Liegt jedoch am
+Eingang \textbf{0} an, so gibt es keine Basis-Emitter-Spannung und
+damit fließt auch kein Basis-Emitter-Strom, der Transistor sperrt.
+Da der Widerstand des gesperrten Transistors sehr groß ist
+überwiegt am Spannungsteiler ($R3$, Transistor) der Transistor bei
+weitem und fast die gesamte
+Spannung fällt an diesem ab. Der Ausgang ist somit auf \textbf{1}.\\ \\
+Der Widerstand $R2$ ist zur Begrenzung und Stabilisierung des
+Transistors: Da die Basis-Emitter-Impedanz eines Transistors stark
+temperaturabhängig ist, würde ohne den Widerstand $R2$ eine kleine
+Temperaturerhöhung bereits einen starken Einfluss auf den
+Kollektorstrom und damit auf die Ausgangspotentiale haben. Wählt
+man $R2$ deutlich größer als diese Basis-Emitter-Impedanz, so kann
+der Effekt merklich reduziert werden. In dieser Schaltung wird der
+Transistor als Schalter, also in Sättigung verwendet. Hierdurch
+ist die Leistungsaufnahme der Schaltung reduziert, gleichzeitig
+aber auch die Schaltzeit limitiert, da die mit Ladungsträgern
+geflutete Basis eine gewisse Zeit benötigt bis sie nach Abschalten
+des Basisstroms ladungsträgerfrei ist und der Transistor damit
+gesperrt wird. Die Diode $D_1$ ist eigentlich unnötig.\\ \\
+Obige Schaltung ist auf dem Experimentierboard schon komplett
+aufgebaut. Es müssen nur noch die Ein- und Ausgangsleitung
+eingesteckt werden. In der Abbildung bei "`Anschluss der
+Diodengatter"' ist dies durch die beiden blauen Stecker bereits
+geschehen.
+
+\subsection*{NAND-Gatter}
+\begin{equation*}
+\begin{array}{cc|c}
+A & B & C = \overline{A \wedge B}\\
+\hline
+0 & 0 & 1\\
+0 & 1 & 1\\
+1 & 0 & 1\\
+1 & 1 & 0
+\end{array}
+\end{equation*}
+Schließt man an den Ausgang eines \emph{AND}-Gatters ein
+\emph{NOT}-Gatter an, so erhält man die \emph{NAND}-Verknüpfung.
+\begin{center}\includegraphics[height=5cm]{Schaltplaene/12b_NAND-Gatter.pdf}\end{center}
+\subsection{OR-Gatter} %1.3
+\begin{equation*}
+\begin{array}{cc|c}
+A & B & C = A \OR B\\
+\hline
+0 & 0 & 0\\
+0 & 1 & 1\\
+1 & 0 & 1\\
+1 & 1 & 1
+\end{array}
+\end{equation*}
+Die logische \emph{ODER}-Verknüpfung ergibt \textbf{1}, sobald
+mindestens ein Eingang auf \textbf{1} liegt.
+\begin{center}\includegraphics[height=5cm]{Schaltplaene/13_Dioden-OR-Gatter.pdf}\end{center}
+Sobald an mindestens einem der Eingänge \textbf{1} angelegt wird,
+fließt ein Strom durch den Spannungsteiler (Dioden, $R1$). Ist der
+Widerstand $R1$ sehr viel größer als der Durchlasswiderstand der
+Dioden gewählt, so fällt fast die gesamte Spannung an $R1$ ab. Der
+Ausgang liegt damit auf \textbf{1}. Liegt jedoch an beiden
+Eingängen \textbf{0} an, so sind alle Zugangsleitungen der
+Schaltung auf \textbf{0}. Es fließt kein Strom und der Ausgang
+liegt ebenfalls auf \textbf{0}. Analog zum \emph{AND}-Gatter wird
+durch die Dioden an den Eingängen die Beeinflussung der Eingänge
+untereinander verhindert: Wenn an einem Eingang \textbf{1} und am
+anderen \textbf{0} anliegt, ist immer eine Diode in Sperrichtung
+gepolt und unterbindet somit einen Stromfluss von einen Eingang
+zum anderen.\\ \\
+Da der Durchlasswiderstand der Dioden größer Null ist, fällt an
+den Dioden auch in Durchlassrichtung ein kleiner Teil der Spannung
+ab, daher ist am Ausgang die \emph{HIGH}-Schwelle etwas niedriger
+als am Eingang. Schließt man mehrere dieser Gatter hintereinander
+so sinkt die \emph{HIGH}- Schwelle immer weiter ab.
+\textbf{Hinweis:} Wenn an beiden Eingängen (A,B) \textbf{0}
+anliegt, so fließt durch die Dioden kein Strom, es fällt an ihnen
+daher auch keine Spannung ab. Sie werden nicht in Sperrrichtung
+betrieben und ihr Sperrwiderstand hat hiermit auch nichts zu tun.
+
+\subsection*{Anschluss der Diodengatter}
+Die gesamte Aufgabe 1 spielt sich nur in diesem Bereich des Boards
+ab (Schalter und LEDs einmal ausgenommen), hier sind alle
+erforderlichen Dioden/Transistoren vorhanden:
+\begin{center}\includegraphics[height=5cm]{Bilder/Diodengatter.jpg}\end{center}
+Die beiden Bauteile links unten sind die Dioden für das
+AND-/OR-Gatter. Bei genauem Hinsehen erkennt man bei der oberen
+Diode einen schwarzen Ring auf der rechten Seite ihres
+Glaskolbens. Dieser entspricht dem durchgezogenen vertikalen
+Balken ihres Schaltbildes
+\includegraphics[height=0.25cm]{Schaltplaene/20_Diode.pdf} und gibt
+damit deren Durchlassrichtung vor (in diesem Fall nach rechts).\\ \\
+Der runde silberne Zylinder rechts in der Mitte ist der Transistor
+für das NOT-Gatter. Er ist wie schon erwähnt bereits komplett über
+die schwarz isolierten Drähte samt Schutzdiode und -Widerstand
+angeschlossen. Der Aus- und Eingang des NOT-Gatters ist durch die
+beiden blauen Kabel markiert.
+\subsection*{Fragen}
+\begin{itemize}
+    \item Welche Probleme entstehen beim Hintereinanderschalten
+    vieler solcher Diodengatter?
+    \item Wozu werden die Dioden im AND-/OR-Gatter benötigt?
+    \item Wie ließe sich ein AND-/OR-Gatter mit mehr als zwei
+    (beliebig vielen) Eingängen realisieren?
+\end{itemize}
+% 2
+\section{Weitere einfache logische Funktionen (Gatter), realisiert mit ICs}
+Für die nachfolgenden Schaltungen verwenden wir ICs, in welche die
+in Aufgabe 1 kennengelernten Logikgatter bereits integriert sind.
+So besteht der IC 7400 beispielsweise aus vier NAND-Gattern. An
+zwei seiner vierzehn Beinchen werden die Versorgungsspannung
+($+5V$) und Masse ($0V$) angelegt, den restlichen zwölf Beinchen
+entsprechen dann direkt die acht Eingänge $E_{11}, E_{12}..E_{41},
+E_{42}$ sowie die vier Ausgänge $A_1 .. A_4$. Zu beachten ist,
+dass sich offen gelassene (also nicht verschaltete) Eingänge so
+verhalten, als seien sie auf \textbf{1} gelegt.\\ \\
+Ab nun werden für die Logikgatter stellvertretend folgende Symbole
+verwendet:
+\begin{center}\includegraphics[height=4cm]{Schaltplaene/10_Schaltsymbole.pdf}\end{center}
+Das $\ge$-Zeichen beim OR-Gatter verdeutlicht, dass der Ausgang
+\textbf{1} wird, sobald die Summe der Eingangszustände $A + B \ge
+1$ sind. Beim XOR hingegen muss die Summe $A + B$ genau 1 sein,
+symbolisiert durch $=1$. Die $1$ beim NOT bedeutet, dass der
+Eingangzustand einfach unverändert durchgeleitet wird. Die
+Invertierung geschieht durch die Rampe am Ausgang (ebenso beim
+NAND und NOR). Oft wird die Invertierung auch durch einen kleiner
+Kreis anstelle der Rampe symbolisiert. Die Nummer unter den
+Symbolen gibt die Bezeichnung der ICs an, die dieses logische
+Gatter beinhalten.
+\\ \\
+Zum Anschluss der ICs: Zuerst sucht man sich einen
+freien Sockel und schließt zur Stromversorgung je ein
+schwarzes/rotes Kabel links/rechts des Sockels bei Masse
+(GND)/$\unit[+5]{V}$ (VCC) an:
+\begin{center}\includegraphics[width=7cm]{Bilder/ic_sockel_1.jpg} \includegraphics[width=7cm]{Bilder/ic_sockel_2.jpg}\end{center}
+Nun sucht man sich das zu verwendende IC samt Anschlusskappe
+heraus (hier im Beispiel IC7400 - \emph{NAND}).
+\begin{center}\includegraphics[height=6cm]{Bilder/ic_sockel.jpg}\end{center}
+Sockel, IC sowie Anschlusskappe haben jeweils eine Kerbe (hier:
+schwarzer Halbkreis). Beim Anschließen ist darauf zu achten, dass
+diese immer bündig nach rechts zeigt. Das IC wird nun in den
+Sockel eingesetzt und, falls alle Beinchen ordentlich in den
+Löchern des Sockels stecken, kräftig hineingedrückt. Anschließend
+kann die Anschlusskappe aufgesetzt werden. An dieser ist
+ersichtlich, wo die zuvor angebrachten Versorgungsleitungen
+eingesteckt werden müssen (GND in \textbf{-} sowie VCC in
+\textbf{+}).
+\begin{center}\includegraphics[width=7cm]{Bilder/ic_sockel_3.jpg} \includegraphics[width=7cm]{Bilder/ic_sockel_4.jpg}\end{center}
+Nun ist das IC betriebsbereit und kann verschaltet werden. In
+folgender Abbildung wurde ein \emph{NAND} aufgebaut:
+\begin{center}\includegraphics[width=14cm]{Bilder/Anschluss_ICs.jpg}\end{center}
+Über die beiden Schalter wird jeweils eine \textbf{1} in die
+Eingänge $E_{11}$ und $E_{12}$ eingegeben. Das Ergebnis
+(\textbf{0}) wird über den Ausgang $A_1$ auf der Dioden
+ausgegeben.
+% 2.1
+\subsection{Inverter (NOT-Gatter) aus NAND- oder NOR-Gatter}
+Nun soll aus einem NAND-/NOR-Gatter ein NOT-Gatter aufgebaut
+werden. In den Wahrheitstabellen der Funktionen betrachtet man
+dazu zunächst die Zeilen, in denen am Ausgang $C$ die Negation des
+Eingangs $A$ anliegt (mit Pfeil gekennzeichnet):
+\begin{equation*}
+\begin{array}{cc}
+  \begin{array}{lll|c}
+   & A &   B &   C = \NOT{A \AND B} \\
+    \hline
+ \rightarrow    & 0 &   0 &   1 \\
+ \rightarrow    & 0 &   1_\star &   1 \\
+                & 1 &   0 &   1 \\
+ \rightarrow    & 1 &   1_\star &   0
+\end{array}
+\quad & \quad
+  \begin{array}{lll|c}
+   & A &   B &   C = \NOT{A \OR B} \\
+    \hline
+ \rightarrow    &    0 &   0_\star &   1 \\
+                &    0 &   1 &   0 \\
+ \rightarrow    &    1 &   0_\star &   0 \\
+ \rightarrow    &    1 &   1 &   0
+\end{array}
+\end{array}
+\end{equation*}
+Jetzt überlegt man, welche Bedingungen dann für $B$ gelten müssen.
+Aus der ersten und vierten Zeile beider Wahrheitstabellen folgt $B
+= A$, d.h. die Eingangsleitungen des NAND-/NOR-Bausteins müssen
+verbunden werden.\\
+Alternativ betrachtet man Zeile zwei und vier beim NAND (mit
+Sternchen gekennzeichnet): Hier liegt $B$ jeweils auf \textbf{1}.
+Selbiges ergibt beim NOR für Zeile eins und drei: $B$ liegt
+dauerhaft auf \textbf{0}.\\ \\
+Um einen Inverter zu erhalten können also zunächst bei beiden
+IC-Typen die Eingänge verbunden werden. Alternativ wird beim NAND
+der eine Eingang konstant auf \textbf{1} gelegt bzw. beim NOR
+einer der Eingänge konstant auf \textbf{0} gehalten:
+\begin{center}\includegraphics[height=5cm]{Schaltplaene/21_NOT_aus_NAND_oder_NOR.pdf}\end{center}
+\subsection{XOR-Gatter}
+Das XOR (e\textbf{X}clusive \textbf{OR}) entspricht einem
+logischen "`entweder oder"', ergibt also nur \textbf{1}, wenn
+genau einer der beiden Eingänge auf \textbf{1} liegt:
+% 2.2 XOR-Gatter
+\begin{equation*}
+\begin{array}{cc|c}
+A & B & C = A \XOR B\\
+\hline
+0 & 0 & 0\\
+0 & 1 & 1\\
+1 & 0 & 1\\
+1 & 1 & 0
+\end{array}
+\end{equation*}
+Die disjunktive Normalform lässt sich direkt aus der
+Wahrheitstabelle ablesen, indem man die Zeilen betrachtet, in
+denen die Ausgangsvariable \textbf{1} ergibt, und die Bedingungen
+die jede dieser Zeile stellt (\emph{UND}-Verknüpfungen)
+untereinander mit \emph{ODER} verknüpft. Im Falle des \emph{XOR}
+ist die Ausgangsvariable $C$ auf \textbf{1}, wenn der Eingang $A
+=$ \textbf{0} \emph{UND} der Eingang $B =$ \textbf{1} ist,
+\emph{ODER} wenn der Eingang $A =$ \textbf{1} \emph{UND} der
+Eingang $B =$ \textbf{0} ist.
+\begin{equation*}
+C = (\NOT{A} \AND B) \OR (A \AND \NOT{B})
+\end{equation*}
+Diese Formel kann nun aus $2*$\emph{NAND}, $2*$\emph{AND} und
+$1*$-\emph{OR} realisiert werden:
+\begin{center}\includegraphics[height=7cm]{Schaltplaene/22_XOR_aus_disjunktiver_Normalform.pdf}\end{center}
+
+\subsection{XOR-Gatter aus NAND-Gatter}
+Die in Aufgabe 2.2 gewonnene Formel kann nun wie folgt in reine
+\emph{NAND}-Schreibweise umgeformt werden:
+\begin{eqnarray}
+C &=& \bra{A \AND \NOT{B}} \OR \bra{\NOT{A} \AND B} \\
+\label{xor1}  &=& \bra{A \AND \NOT{B}} \OR \bra{A \AND \NOT{A}} \OR \bra{\NOT{A} \AND B} \OR \bra{B \AND \NOT{B}} \\
+\label{xor2}  &=& A \AND \bra{\NOT{A} \OR \NOT{B}} \OR B \AND \bra{\NOT{A} \OR \NOT{B}} \\
+\label{xor3}  &=& A \AND \bra{\NOT{\NOT{\NOT{A} \OR \NOT{B}}}} \OR B \AND \bra{\NOT{\NOT{\NOT{A} \OR \NOT{B}}}} \\
+\label{xor4}  &=& A \AND \bra{\NOT{A \AND B}} \OR B \AND \bra{\NOT{A \AND B}} \\
+\label{xor5}  &=& \NOT{\NOT{\underbrace{A \AND \bra{\NOT{A \AND B}}}_X \OR \underbrace{B \AND \bra{\NOT{A \AND B}}}_Y}}\\
+\label{xor6}  &=& \NOT{\NOT{A \AND \bra{\NOT{A \AND B}}} \AND
+\NOT{B \AND \bra{\NOT{A \AND B}}}}\\
+\label{xor7}  &=& \NOT{\NOT{A \NOT{A B}} \NOT{B \NOT{A B}}}
+\end{eqnarray}
+Zunächst wird zweimal mit "`$\OR$"' \textbf{0} erweitert
+(\glref{xor1}), da die logische Verknüpfung $\bra{x \AND \NOT x}$
+eine Kontradiktion also immer \textbf{0} ist. In den ersten beiden
+Klammern aus \glref{xor1} kann ein A ausgeklammert werden, da
+dieses in beiden Klammern vorkommt. Selbiges gilt auch für B in
+den letzten beiden Klammern (\glref{xor2}). In \glref{xor3} werden
+die beiden Klammern zweifach negiert was einer Äquivalenzumformung
+entspricht. Diese Umformung machen wir uns nun in \glref{xor4} zu
+Nutze, indem nach dem De Morganschen Gesetz $\NOT{A \OR B} = \NOT
+A \AND \NOT B$ umgeformt wird. Jetzt wird die ganze Gleichung
+doppelt negiert (\glref{xor5}) und wieder das De Morgansche Gesetz
+$\NOT{X \OR Y} = \NOT X \AND \NOT Y$ angewendet, so dass
+letztendlich die in der Aufgabe geforderte
+Darstellung erreicht wird (\glref{xor6} bzw. \glref{xor7}).\\ \\
+Die so erhaltene Gleichung lässt sich nun aus lediglich 4
+\emph{NAND}-Gattern aufbauen:
+\begin{center}\includegraphics[height=6cm]{Schaltplaene/23_XOR_aus_NAND-Gatter.pdf}\end{center}
+Der Vorteil solcher Umformungen liegt darin, dass danach nur noch
+ein Gatterbausteintyp benötigt wird. Dies ist besonders für große
+Schaltungen von Bedeutung, da sich dadurch der Herstellungsaufwand
+sowie dessen Kosten extrem senken lassen.
+
+\subsection*{Fragen}
+\begin{itemize}
+    \item Was bewirkt das Offenlassen eines Eingangs eines ICs?
+    \item Wie erhält man aus einem NAND- oder NOR-Gatter ein
+    NOT-Gatter?
+    \item Wie kommt man, ausgehen von der Wahrheitstabelle einer
+    Funktion auf deren disjunktive Normalform?
+    \item Welche Vorteile ergeben sich aus einer Umformung der
+        disjunktiven Normalform in die reine NAND- oder
+        NOR-Schreibweise?
+\end{itemize}
+
+\section{Addierer} %3
+\subsection{Halbaddierer}
+% 3.1 Halbaddierer
+\begin{equation*}
+\begin{array}{cc|cc}
+A & B & S & $Ü$\\
+\hline
+0 & 0 & 0 & 0\\
+0 & 1 & 1 & 0\\
+1 & 0 & 1 & 0\\
+1 & 1 & 0 & 1
+\end{array}
+\end{equation*}
+Ein Halbaddierer addiert zwei 1-Bit-Binärzahlen und gibt das
+2-Bit-Ergebnis in Form von Summe und Übertrag aus. Es lassen sich
+mit Halbaddierern keine größeren Rechnungen ausführen, da der
+Übertrag vorangehender Stufen nicht berücksichtigt werden kann.
+\begin{center}\includegraphics[height=5cm]{Schaltplaene/31_Halbaddierer.pdf}\end{center}
+Die Summe ergibt sich, wie man aus der Wahrheitstafel leicht
+ablesen kann, durch Verwendung der \emph{XOR} Verknüpfung. Es ist
+empfehlenswert das \emph{XOR} als fertigen Baustein zu verwenden.
+Den Übertrag erhält man durch \emph{UND}-Verknüpfung der
+beiden Eingänge.\\ \\
+Optimalerweise lässt man den Halbaddierer aufgebaut und erweitert
+ihn im nächsten Aufgabenteil zum Volladdierer.
+
+\subsection{Volladdierer}
+% 3.2 Volladdierer
+\begin{equation*}
+\begin{array}{ccc|cc}
+A & B & C & S & $Ü$\\
+\hline
+0 & 0 & 0 & 0 & 0\\
+0 & 0 & 1 & 1 & 0\\
+0 & 1 & 0 & 1 & 0\\
+0 & 1 & 1 & 0 & 1\\
+1 & 0 & 0 & 1 & 0\\
+1 & 0 & 1 & 0 & 1\\
+1 & 1 & 0 & 0 & 1\\
+1 & 1 & 1 & 1 & 1
+\end{array}
+\end{equation*}
+Um binäre Zahlen mit mehreren Bits zu addieren benötigt man
+Volladdierer, da beim Volladdierer auch der Übertrag der
+vorangehenden Stufe berücksichtigt werden kann. Ein Volladdierer
+lässt sich aus zwei Halbaddierern aufbauen und kann drei
+1-Bit-Binärzahlen addieren. Der dritte Eingang $\text{Ü}_{-1}$ aus
+folgendem Schaubild entspricht der Spalte $C$ aus der
+Wahrheitstabelle von oben. Da alle drei Eingänge (A,B,C) völlig
+gleichwertig sind, wurde dort zunächst keine Unterscheidung
+vorgenommen.
+\begin{center}\includegraphics[height=5.5cm]{Schaltplaene/32_1-Bit-Volladdierer_aus_zwei_Halbaddierern.pdf}\end{center}
+Wir bauen zusätzlich zum im vorangehenden Aufgabenteil bereits
+aufgebauten Halbaddierer einen weiteren Halbaddierer auf und geben
+auf dessen Eingänge den Summe-Ausgang des "`alten"' Halbaddierers
+sowie die dritte 1-Bit-Zahl ($=$ der Übertrag der vorangehenden
+Stufe). Der Ausgang dieses "`neuen"' Halbaddierers ist die Summe
+des Volladdierers. Zusätzlich Verknüpfen wir noch die
+Übertragsausgänge beider Halbaddierer mit \emph{ODER}, dies
+ergibt den Übertragsausgang des Volladdierers.\\ \\
+\begin{center}\includegraphics[height=3cm]{Schaltplaene/32b_1-Bit-Volladdierer_aus_zwei_Halbaddierern_einfach.pdf}\end{center}
+Zur Addition größerer Zahlen können nun mehrerer solcher
+Volladdierer zusammengeschlossen werden. Als Beispiel wurde hier
+ein 4-Bit-Volladdierer gewählt, der in der nächsten Aufgabe in
+Form eines ICs Verwendung findet:
+\begin{center}\includegraphics[height=7cm]{Schaltplaene/32c_4-Bit_Volladdierer.pdf}\end{center}
+Der erste Volladdierer ganz rechts addiert die beiden Stellen
+$A_1$, $B_1$ der 4-Bit-Zahlen $A_4 A_3 A_2 A_1$, $B_4 B_3 B_2 B_1$
+(wir vernachlässigen zunächst den Eingang $\text{Ü}_{-1}$). Die
+Summe $A_1 + B_1$ wird an $S_1$ ausgegeben. Ein eventuell
+auftretender Übertrag aus dieser Rechnung wird über $\text{Ü}_{1}$
+in den Übertragseingang $\text{Ü}_{-1}$ des zweiten (von rechts)
+Volladdierers gegeben. Dieser führt nun, unter Berücksichtigung
+des Übertrags aus der ersten Stufe, die Rechnung $A_2 + B_2 +
+\text{Ü}_{1}$ aus und gibt deren Summe an $S_2$ aus. Der eventuell
+auftretende Übertrag $\text{Ü}_{2}$ wird wieder an die nächste
+Stufe weitergegeben. So führt sich das Ganze fort bis zum letzten
+Volladdierer (ganz links). Der Übertrag $\text{Ü}_{4}$ aus der
+letzten Rechnung ($A_4 + B_4 + \text{Ü}_{3}$) schließlich wird
+nach außen geführt und kann so optional von einem weiteren
+Addierer verarbeitet werden. Genauso kann über den
+$\text{Ü}_{-1}$-Eingang rechts oben ein Übertrag aus einer
+vorangehenden Rechnung eingegeben werden.
+
+\subsection{Subtrahierer} %3.3
+Der 4-Bit Subtrahierer lässt durch geschickte Verschaltung aus
+einem 4-Bit-Addierer, 5 \emph{NOT}-Gattern und 4
+\emph{XOR}-Gattern aufbauen.
+\begin{center}\includegraphics[height=11cm]{Schaltplaene/33_Subtrahierer.pdf}\end{center}
+Die abzuziehende Zahl $A$ mit den binären Komponenten $A_4 A_3 A_2
+A_1$ wird invertiert, indem die einzelnen Komponenten jeweils
+durch ein zu einem \emph{NOT} verschalteten \emph{NAND}-Gatter
+negiert werden. Alternativ kann dies auch durch Vertauschen der
+Versorgungsleitungen der Schalter zur Eingabe der Zahl $A$
+erfolgen. Die Negation entspricht folgender Rechenoperation:
+$$\NOT{A} = 15 - A$$
+Der 4-Bit Volladdierer rechnet damit:
+\begin{eqnarray*}
+S &=& B + \NOT{A} + \text{Ü}_{-1}\\
+&=& B - A + 15 + \text{Ü}_{-1}
+\end{eqnarray*}
+Da der Übertragseingang $\text{Ü}_{-1}$ an den Übertragsausgang
+$\text{Ü}_{4}$ angeschlossen ist, ist an dieser Stelle eine
+Fallunterscheidung notwendig. Falls im Volladdierer ein Übertrag
+entsteht, so wird dieser auch zu den Eingangszahlen hinzuaddiert.
+Wir müssen daher unterscheiden, ob $B-A < 0$, $B-A=0$ oder $B-A
+> 0$ vorliegt:
+\begin{description}
+\item[Fall 1: $B - A > 0$:] In diesem Fall ist die Summe des
+    4-Bit Volladdierers größer als seine maximal darstellbare
+    Zahl und es wird am Übertragsausgang $\text{Ü}_{4}$ ein
+    entstandener Übertrag (1) ausgegeben. Da dieser Übertrag
+    jedoch an den Übertragseingang angeschlossen ist, wird
+    durch $\text{Ü}_{-1} = $ \textbf{1} noch eine 1 addiert
+    und die Rechnung wird zu:
+\begin{eqnarray*}
+S &=& B + \NOT{A} + \text{Ü}_{-1}\\
+&=& B - A + 15 + 1\\
+&=& B - A + 16
+\end{eqnarray*}
+Der Übertragsausgang $\text{Ü}_{4}$ ist \textbf{1}, somit ist
+das Vorzeichenbit $SIGN$, welches mit einem \emph{NAND}-Gatter
+als Negation von $\text{Ü}_{4}$ gebildet wird \textbf{0}, was
+einem $+$ entspricht. Die \emph{XOR}-Verknüpfungen, welche die
+Summenausgänge des 4-Bit-Addierers $S_4 S_3 S_2 S_1$ mit den
+Ausgabebits $D_4 D_3 D_2 D_1$ verknüpfen, verändern das Signal
+nicht, da an jedem dieser \emph{XOR}-Gatter an einem Eingang
+\textbf{0} anliegt ($Z \XOR 0 = Z$). Da es nur vier
+Ausgangsbits $D_4 D_3 D_2 D_1$ gibt, werden Zahlen größer als
+$15$ (der größten mit vier Bits darstellbaren Zahl)
+abgeschnitten
+\begin{eqnarray*}
+D &=& S ~\text{mod}~ 16
+\end{eqnarray*}
+Wenn wir beachten, dass es sich um zwei 4-Bit Eingangsvariablen
+handelt, welche voneinander abgezogen werden, so dass maximal
+einfaches Überschreiten der $16$ möglich ist, folgt für $D$:
+\begin{eqnarray*}
+D &=& S - 16\\
+&=& (B-A + 16) - 16\\
+&=& B-A
+\end{eqnarray*}
+\item[Fall 2: $B - A < 0$:] Nun hingegen ist die Summe des
+    4-Bit Volladdierers kleiner als die maximal darstellbare
+    Zahl, es ensteht daher kein Übertrag, $\text{Ü}_{4}$ ist
+    somit \textbf{0}. Da der Übertragsausgang an den
+    Übertragseingang angeschlossen ist, ist daher auch
+    $\text{Ü}_{-1}$ \textbf{0}. Die Rechnung wird zu:
+\begin{eqnarray*}
+S &=& B + \NOT{A} + 0\\
+&=& B-A + 15\\
+\end{eqnarray*}
+Das Vorzeichenbit $SIGN$ ist damit, als Negation von
+$\text{Ü}_{4}$, \textbf{1} (entspricht $-$). Da $Z \XOR 1 =
+\NOT{Z}$ invertiert nun die \emph{XOR}-Verknüpfung, welche die
+Ausgangsbits $D_4 D_3 D_2 D_1$ aus den Summenausgängen des
+Addierers $S_4 S_3 S_2 S_1$ bildet. Umschreibt man die
+Negierung wie oben, so gilt:
+\begin{eqnarray*}
+D &=& \NOT{S}\\
+&=& 15 - S \\
+&=& 15 - (B - A + 15)\\
+&=& A - B
+\end{eqnarray*}
+Beachtet man nun noch, dass das Vorzeichenbit gesetzt ist:
+\begin{eqnarray*}
+D &=& (-1) * (A - B)\\
+&=& B - A
+\end{eqnarray*}
+\item[Fall 3: $B - A = 0$ (Sonderfall)] In diesem Fall ist das
+    Ergebnis davon abhängig, ob in der vorangehenden Rechnung
+$\text{Ü}_{-1}$ \textbf{0} oder \textbf{1} gewesen ist.\\
+War $\text{Ü}_{4} =\text{Ü}_{-1} = 1$ und lag damit Fall 1
+vor, so verändert sich die Rechnung des Addierers zu:
+\begin{eqnarray*}
+S &=& B - A + 15 +\text{Ü}_{-1}\\
+&=& \underbrace{B-A}_{=0~\textnormal{n.V.}} + 15 + 1\\
+&=& 16
+\end{eqnarray*}
+Da $S=16$ nur mit Übertrag darstellbar ist, bleibt der
+Übertragsausgang $\text{Ü}_{4} =\text{Ü}_{-1} = 1$, somit wird
+das Vorzeichenbit $SIGN$ durch die Negation \textbf{0} und die
+\emph{XOR}-Verknüpfungen verändern die Summenausgänge nicht
+($Z \XOR 0 = Z$). Beim Bilden des Übertrags findet analog zu
+Fall 1 eine Beschränkung auf modulo $16$ statt.
+\begin{eqnarray*}
+D &=& S ~\text{mod}~ 16\\
+&=& 16 ~\text{mod}~ 16\\
+&=& 0
+\end{eqnarray*}
+Das Vorzeichenbit SIGN ist \textbf{0}, das Ergebnis ist
+folglich $D=+0$. Lag im vorangehenden Schritt jedoch Fall 2
+vor ($\text{Ü}=\text{Ü}_{-1}=0$), so ergibt die Summe des
+4-Bit-Addierers:
+\begin{eqnarray*}
+S &=& B-A + 15 +\text{Ü}_{-1}\\
+&=& \underbrace{B-A}_{=0~\textnormal{n.V.}} + 15 + 0\\
+&=& 15\\
+\end{eqnarray*}
+Nun geht es analog zu Fall 2 weiter, da $S=15$ vom
+4-Bit-Addierer ohne Übertrag darstellbar ist, bleibt
+$\text{Ü}_{4}$ und damit auch $\text{Ü}_{-1}$ auf \textbf{0}.
+Durch die Negation ist das Vorzeichenbit $SIGN$ damit
+\textbf{1}. Wegen $Z \XOR 1= \NOT{Z}$ invertieren die
+\emph{XOR}-Verknüpfungen die Summenausgänge $S_4 S_3 S_2 S_1$.
+\begin{eqnarray*}
+D &=& \NOT{S}\\
+&=& 15 - S \\
+&=& 15 - 15\\
+&=& 0
+\end{eqnarray*}
+Das Vorzeichenbit $SIGN$ ist \textbf{1}, das Ergebnis ist
+somit $D=-0$, da aber $+0=-0$, erhält man bei Fall 3 bei
+beiden möglichen Anfangszuständen identische Ergebnisse.
+Lediglich der Rechenweg weicht bei den unterschiedlichen
+Anfangszuständen voneinander ab.\\
+Dieser 3. Fall nimmt eine Sonderstellung ein, wichtig für das
+Verständnis des Subtrahierers sind eigentlich nur die beiden Fälle
+1 und 2, Fall 3 ist jedoch der Vollständigkeit halber erwähnt.\\
+\item[Beispiel 1:] $B = 5$ und $A = 8$, dann ist $B - A +15 =
+    5 - 8 + 15 = 12 < 16$. Es liegt Fall 2 vor. $ S = B - A +
+    15 + 0 = 12$ und $ D = 15 - S = 15 - 12 = 3$. Das
+    Vorzeichenbit ist \textbf{1}, daher ist das Ergebnis als
+    $-3$ zu interpretieren. \item[Beispiel 2:] $B = 12$ und $A
+    = 7$, dann ist $B - A + 15 = 12 - 7 + 15 = 20 \geq 16$. Es
+    liegt Fall 1 vor. $ S = B - A + 15 + 1 = 21$ und $ D = S
+    ~\text{mod}~ 16 = 21 ~\text{mod}~ 16 \equiv 21 - 16 = 5$.
+    Das Vorzeichenbit ist \textbf{0}, daher ist das Ergebnis
+    $5$.
+\end{description}
+
+\subsection*{Fragen}
+\begin{itemize}
+    \item Welches Problem ergibt sich beim Halbaddierer?
+    \item Wie kommt man darauf, aus welchen Gattern der Halbaddierers aufgebaut ist?
+    \item Wozu wird das ODER beim Volladdierer benötigt?
+    \item Wozu werden beim Subtrahierer die XORs benötigt und in
+    welchem Fall haben sie keine Wirkung?
+    \item Wieso wird der Übertragsausgang auf den Übertragseingang
+    rückgekoppelt und wann gibt dieser einen Übertrag aus?
+    \item Welches Problem besteht beim Subtrahierer im Bezug
+        auf die Ausgabe der Null?
+\end{itemize}
+
+\section{Speicherelemente}
+Ein Flip-Flop ist eine einfach zu realisierende und schnelle
+Speicherform. Ein binärer Zustand kann über den Eingang eingegeben
+werden und wird daraufhin vom Flip-Flop so lange gehalten
+($\Rightarrow$ Speicher), bis ein neuer Zustand gesetzt wird.\\ \\
+\textbf{Hinweis:} Im RAM eines Computers finden keine Flip-Flops
+Verwendung, da sonst für jedes Bit mindestens ein komplettes
+Reset-Set-Flip-Flop benötigt werden würde, hierbei ist der Aufwand
+an Transistoren sehr groß. Stattdessen wird ein dynamischer
+Speicher ($\rightarrow$ D-RAM) bestehend aus einem Kondensator und
+einem Transistor pro Bit eingesetzt:
+\begin{center}\includegraphics[height=3cm]{Schaltplaene/41a_D-RAM.pdf}\end{center}
+Die Geschwindigkeit dieser Art von Speicher ist zwar geringer als mit Flip-Flops, dafür ist
+aber auch der Aufwand viel niedriger. Der CPU-Cache hingegen läuft
+bei aktuellen CPUs mit voller CPU-Geschwindigkeit, daher müssen
+Taktfrequenzen im mehrere GHz-Bereich erreicht werden, was sich
+nur durch solche aufwendigen FFs realisieren lässt.
+\subsection{RS-Flip-Flop (RS-FF)}
+% 4.1 RS Flipflop
+\begin{equation*}
+\begin{array}{cc|cc|l}
+ S & R & Q_n & \NOT{Q}_n & \\
+\hline
+0 & 0 & Q_{n-1} & \NOT{Q}_{n-1} & \text{keine Änderung (speichern)}\\
+0 & 1 & 0 & 1 & \text{setze \textbf{0}}\\
+1 & 0 & 1 & 0 & \text{setze \textbf{1}}\\
+1 & 1 & 1 & 1 & Q = \NOT{Q} \text{: verboten}
+\end{array}
+\end{equation*}
+Das \textbf{R}eset-\textbf{S}et-Flip-Flop (kurz: RS-FF) ist das
+einfachste Flip-Flop. Es verfügt über zwei getrennte Eingänge
+\emph{$\NOT{\textnormal{Set}}$} und
+\emph{$\NOT{\textnormal{Reset}}$}. Im Schaltbild wurden negierte
+Set- und Reset-Eingänge verwendet damit wir die gleiche Situation
+wie beim noch zu besprechenden, taktzustandsgesteuerten RST-FF
+haben, bei dem ja durch die vorgeschalteten \emph{NAND}-Gatter der
+Taktstufe die Eingänge des FFs negiert werden. Somit ergibt sich
+die gleiche Wahrheitstabelle für die beiden Flip-Flops. Die
+ausführliche Diskussion der Funktionsweise wird nur am RS-FF
+durchgeführt und ist durch diesen "`Trick"' beim RST-FF identisch.
+\begin{center}\includegraphics[height=6cm]{Schaltplaene/41_RS-Flip-Flop.pdf}\end{center}
+Wird an Set \textbf{1} angelegt, so ist $\NOT{S} =
+\textnormal{\textbf{0}}$ und damit ergibt die obere
+\emph{NAND}-Verknüpfung, egal was an ihrem anderen Eingang
+anliegt, wegen $\NOT{A \AND 0} =$ \textbf{1}, sprich es wird der
+Ausgang $Q$ auf \textbf{1} gesetzt. Analog wird, wenn an Reset
+\textbf{1} angelegt wird, und damit $\NOT{R} =
+\textnormal{\textbf{0}}$ ist, die untere \emph{NAND}-Verknüpfung
+(also der inverse Ausgang $\NOT{Q}$) \textbf{1}. Jetzt erkennen
+wir auch direkt das Problem dieser Schaltung: Wird sowohl an Set
+wie an Reset \textbf{1} angelegt, so ergeben beide
+\emph{NAND}-Verknüpfungen \textbf{1}. In diesem Falle wäre
+$Q=\NOT{Q}=\textnormal{\textbf{1}}$, was als falsche Aussage gilt,
+da nun $\NOT{Q}$ nicht mehr das negierte zu $Q$ ist. Dies ist der
+sogenannte "`Verbotene Zustand`"' des Flip-Flops. Legt man jedoch
+an Set und an Reset \textbf{0} an, also $\NOT{S} = \NOT{R} =
+\textnormal{\textbf{1}}$, so liegt bei beiden \emph{NAND}-Gatter
+an einem der Eingänge jeweils \textbf{1}. Da $\NOT{A \AND
+1}=\NOT{A}$ ist der Ausgangszustand $Q$ bzw $\NOT{Q}$ abhängig vom
+jeweilig anderen Eingang des Gatters. Da diese Eingänge
+"`überkreuzt"' an den Ausgänge des jeweilig anderen Gatters
+angeschlossen sind, ergibt die obere \emph{NAND}-Verknüpfung $Q =
+\NOT{\NOT{Q} \AND 1} = \NOT{\NOT{Q}} = Q$ und analog $\NOT{Q} =
+\NOT{Q \AND 1}$. Folglich bleiben bei dieser Belegung
+die Ausgangszustände $Q$ und $\NOT{Q}$ erhalten.\\ \\
+Es bietet sich an das RS-FF auf dem Sockel ganz rechts unten nahe
+den Schaltern aufzubauen, da diese Schaltung später zu einer
+Entprellschaltung erweitert und in den folgenden Aufgabenteilen
+weiterverwendet wird.
+\subsection{Getaktetes RS-Flip-Flop (RST-FF)}
+% 4.2 Getaktetes RS-Flipflop
+\begin{equation*}
+\begin{array}{ccc|cc|l}
+T & S & R & Q_{n+1} & \NOT{Q}_{n+1}&\\
+\hline
+0 & 0 & 0 & Q_n & \NOT{Q}_n & \text{kein Takt $\Rightarrow$ keine Änderung} \\
+0 & 0 & 1 & Q_n & \NOT{Q}_n & \text{kein Takt $\Rightarrow$ keine Änderung} \\
+0 & 1 & 0 & Q_n & \NOT{Q}_n & \text{kein Takt $\Rightarrow$ keine Änderung} \\
+0 & 1 & 1 & Q_n & \NOT{Q}_n & \text{kein Takt $\Rightarrow$ keine Änderung} \\
+1 & 0 & 0 & Q_n & \NOT{Q}_n & \text{keine Änderung (speichern)} \\
+1 & 0 & 1 & 0 & 1 & \text{setze \textbf{0}}\\
+1 & 1 & 0 & 1 & 0 & \text{setze \textbf{1}}\\
+1 & 1 & 1 & 1 & 1 & Q = \NOT{Q}\text{: verboten}
+\end{array}
+\end{equation*}
+Ein getaktetes Reset-Set-Flip-Flop (kurz: RST-Flip-Flop) ist um
+einen zusätzlichen Eingang, den Takteingang, erweitert. Die beiden
+anderen Eingänge, Set und Reset, sind jeweils mit dem Takteingang
+über \emph{NAND} verknüpft, so dass, nur wenn am Takteingang
+\textbf{1} anliegt, der Schaltzustand des Flip-Flops überhaupt
+beeinflusst werden kann, d.h. der Takt "`enabled"' die Eingänge.
+Dieses Flip-Flop ist damit taktzustandsgesteuert.
+\begin{center}\includegraphics[height=7cm]{Schaltplaene/42_Getaktetes_RS-Flip-Flop.pdf}\end{center}
+Die Funktionsweise ist sonst identisch zu RS-FF (hier kommt der
+Vorteil der inversen Set- und Reset-Eingänge des RS-FF zu tragen).
+\subsection*{Data-Flip-Flop (D-FF)}
+Wird beim RST-FF der Reset Eingang über eine Negation an den
+Set-Eingang angeschlossen (hierzu kann man das \emph{NAND}-Gatter
+des Set Einganges der Taktstufe verwenden), so ergibt sich ein
+neuer Eingang, der sog. Data-Eingang $D$. Liegt der Taktzustand
+\textbf{1} an und legt man an diesen Eingang (D) \textbf{1} an, so
+wird $Q$ auf \textbf{1} gesetzt. Dies wird solange gehalten bis
+man gleichzeitig $T=1$ und $D=0$ anlegt. Das D-FF speichert
+folglich die am $D$-Eingang angelegten Informationen bis zum
+nächsten Taktzustand \textbf{1}. Dieses Flip-Flop hat keinen
+verbotenen Zustand da immer $\NOT{S} \ne \NOT{R}$ gewährleistet
+ist.
+\begin{center}\includegraphics[height=6cm]{Schaltplaene/41b_D-Flip-Flop.pdf}\end{center}
+\subsection*{Entprellen eines Schalters}
+Bei Schaltern handelt es sich meistens um mechanische Bauteile,
+bei denen je nach Schalterstellung Kontakt hergestellt oder der
+Kontakt entfernt ist. Beim Einschalten, also dem Umschalten von
+\emph{kein Kontakt} $\rightarrow$ \emph{Kontakt}, kann durch
+elastisches Verhalten der sich bewegenden Teile im Schalter es zu
+einem "`Abprallen"' kommen. So wird der Kontakt hergestellt,
+danach aber, unter Umständen sogar mehrmals, kurzzeitig wieder
+unterbrochen und erneut hergestellt. Wird ein von einem solchen
+Schalter erzeugtes Signal als Taktsignal für beliebige
+taktflankengesteuerte Schaltungen (Bsp.: Schieberegister, Zähler,
+\dots) verwendet, so kann bei einem einzigen Umschalten des
+Schalters die taktflankengesteuerte Schaltung mehrere Taktflanken
+registrieren. Durch die hohe Geschwindigkeit der Flip-Flops
+reichen diese durch das Abprallen des bewegenden Schaltelements
+erzeugten Signaländerungen aus, als erneute Signalflanke
+registriert zu werden und damit ein unbeabsichtigtes Schieben
+(beim Schieberegister) oder Hochzählen (beim Zähler) auszulösen.\\
+\\
+Dies lässt sich umgehen, wenn als Taktsignal immer das Signal des
+Taktgenerators des Boards verwendet wird, am besten den
+langsamsten Ausgang $F/16$ da die anderen Taktsignale zu schnell
+für saubere Beobachtungen sind.\\ \\
+Um jedoch trotzdem Taktsignale mit den Schaltern erzeugen zu
+können, lässt sich relativ einfach eine "`Entprellschaltung"'
+aufbauen, welche aus einem RS-FF besteht (das im letzten oder
+vorletzten Aufgabenteil aufgebaute FF verwenden). Es wird hierzu
+an den mittleren Anschluss eines Schalters (der Steckplatz,
+welcher sonst als Ausgang verwendet wird) \textbf{0} angelegt. Nun
+kann der untere Ausgang mit \emph{$\NOT{\textnormal{Set}}$}
+$\NOT{S}$ und der obere mit \emph{$\NOT{\textnormal{Reset}}$}
+$\NOT{R}$ eines RS-FF verbunden werden. Am Ausgang $Q$ dieses FF
+kann nun das entprellte Signal abgegriffen werden.
+\begin{center}\includegraphics[height=6cm]{Schaltplaene/41c_Entprellschaltung.pdf}\end{center}
+Diese Schaltung macht sich den schon mehrmals erwähnten Umstand zu
+Nutzte, dass an einem "`leeren"', also nicht angeschlossenen
+Eingang logisch \textbf{1} anliegt. Die im Board eingebauten
+Schalter sind "`Umschalter"', welche also ihren "`Ausgang"'
+(mittlerer Anschluss) entweder mit dem oberen oder unteren
+Anschluss verbinden. Da diesmal der Schalter jedoch anders herum
+verwendet wird, liegt also entweder am oberen oder am unteren
+Anschluss \textbf{0} an und der jeweils andere Anschluss ist
+offen. Kommt es beim Umschalten nun zum "`Prellen"', so wird
+kurzzeitig mehrmals die Verbindung zum mittleren Anschluss
+unterbrochen und danach sofort wiederhergestellt, es kann jedoch,
+falls wir gerade auf "`oben"' geschaltet haben nicht vorkommen
+dass plötzlich an "`unten"' ebenfalls \textbf{0} anliegt. Dies ist
+nicht möglich da dies die entgegengesetzte Schalterstellung
+benötigen würde. In unserer Entprellschaltung wird also je nach
+Schalterstellung entweder an $\NOT{S}$ oder an $\NOT{R}$
+\textbf{0} angelegt und damit der Ausgang $Q$ des FF auf
+\textbf{1} bzw. \textbf{0} gesetzt. Durch das Prellen wird nun
+aber nicht der entgegengesetzte Zustand sondern nur der
+Speicherzustand, also $\NOT{S} = \NOT{R} = 1$ angelegt, dieser
+verändert aber den Ausgangszustand des FF nicht (siehe RS-FF).
+Somit ist das Prellen kompensiert.\\ \\
+Diese Schaltung wird aus dem RS- oder RST-FF aufgebaut und für das
+Taktsignal der nachfolgenden Schaltungen verwendet.
+\subsection*{Unterschiede Taktzustands- und Taktflankensteuerung}
+Es gibt zwei unterschiedliche Arten von Taktsteuerung bei
+Flip-Flops.
+\begin{center}\includegraphics[width=15cm]{Bilder/taktflanke_und_taktzustand.pdf}\end{center}
+\begin{description}
+\item[Taktzustandsgesteuerte FFs (linke Abbildung):] Bei
+    Flip-Flops dieser Kategorie (z.B. RST-FF, D-FF) können die
+    Ausgänge solange über die Eingänge manipuliert werden, wie
+    der zugehörige Taktzustand vorliegt. Bei einem positiv
+    taktzustandsgesteuerten FF kann, solange das das
+    Taktsignal \textbf{1} ist (also im gesamten Zeitinterval
+    $\Delta t$) der Ausgangszustand durch die Eingänge
+    verändert werden. Falls man die Eingänge in $\Delta t$
+    mehrfach hin- und herschaltet, wird dies auch instantan
+    auf die Ausgänge übertragen.
+\item[Taktflankengesteuerte FFs (rechte Abbildung):] Bei
+    diesen wird der Übergang des Taktes von einem Zustand zum
+    anderen benötigt um die Ausgänge durch die Eingänge zu
+    beeinflussen. Beim positiv taktflankengesteuerten FF wird
+    zu dem Zeitpunkt, in dem der Takt von \textbf{0} auf
+    \textbf{1} übergeht, der Ausgangszustand durch die
+    momentane Belegung der Eingänge bestimmt. Die
+    Beeinflussung des Ausganges durch die Eingänge findet in
+    einem einzigen Zeitpunkt $t_n$ und nicht wie bei
+    Taktzustandssteuerung in einem ganzen Zeitintervall statt.
+    Hierdurch zeigt mehrfaches Hin- und Herschalten der Eingänge
+    keine Wirkung. Es ist nur ihre momentane Belegung
+    zum Zeitpunkt $t_n$ von Relevanz.
+\end{description}
+\subsection{Jump-Kill-Master-Slave-Flip-Flop (JK-MS-FF)}
+Das
+\textbf{J}ump-\textbf{K}ill-\textbf{M}aster-\textbf{S}lave-Flip-Flop
+ist ein taktflankengesteuertes Flip-Flop. Nicht der aktuelle
+Zustand des Taktsignals (wie beim RST-Flip-Flop) verarbeitet die
+Informationen, sondern der Übergang des Taktes, also die
+Taktflanke. In der Wahrheitstafel bedeutet \textbf{+} positive
+Taktflanke, also der Übergang des Taktes vom Zustand \textbf{0} in
+den Zustand \textbf{1}, dementsprechend steht \textbf{-} für die
+negative Taktflanke, also für den Übergang von \textbf{1} auf
+\textbf{0}. Merke: Eine Taktflanke ist immer ein Übergang des
+Taktes von einem Zustand in einen anderen, also die "`Ableitung`"'
+des Taktsignals.\\
+Ein JK-MS-FF besteht aus zwei hintereinandergeschalteten RST-FFs,
+vorne dem sog. Master und dahinter dem Slave. Zwischen den beiden
+RST-FFs ist die Taktleitung durch ein \emph{NAND}-Gatter negiert.
+Somit sind Slave und Master immer bei entgegengesetzten
+Taktzuständen "`enabled"', also nie beide gleichzeitig. Dies führt
+insgesamt zur Taktflankensteuerung des gesamten Flip-Flops.
+% 4.2 JK-MS-Flipflop
+\begin{center}\includegraphics[width=15cm]{Schaltplaene/43_JK_Master-Slave-Flip-Flop.pdf}\end{center}
+Bei negativem Taktzustand, also wenn an $\NOT{T}$ \textbf{1}
+anliegt (der Takteingang des Flip-Flops ist negiert), ist das
+vordere (Master-)RST-FF "`enabled"'. Jetzt kann durch $J$ oder $K$
+der Speicherzustand dieses FF verändert werden. Wie beim normalen
+RST-FF ergibt $J=0 ~ K=0$ keine Änderung der Ausgänge des Masters,
+$J=1 ~ K=0$ setzt $Q_{\text{Master}}$ auf \textbf{1} und $J=0 ~
+K=1$ auf \textbf{0}. Anders als beim RST-FF gibt es keinen
+verbotenen Zustand, das Anlegen von $J=1 ~ K=1$ schreibt durch die
+kreuzweise Rückkopplung auf die Ausgänge des Slave-FF den
+Ausgangzustand des Slave-FF invertiert in den Master
+$Q_{\text{Master}}=\NOT{Q_{\text{Slave}}}$.\\ In diesem Takzustand
+($\NOT{T}=1$) ist der Slave gesperrt und kann nicht verändert
+werden.\\\\Wechselt der Taktzustand und ist nun positiv also
+$\NOT{T}=0$, so ist der Master gesperrt und kann nicht verändert
+werden, das hintere RST-FF jedoch ist nun "`enabled"' und
+verarbeitet die an ihm anliegenden Informationen, also die
+Ausgangszustände des Masters. Liegt am Ausgang des Masters
+$Q_{\text{Master}}$, welcher an den Set-Eingang des Slave
+angeschlossen ist, \textbf{1} an, so wird in den Ausgang des
+Slaves $Q_{\text{Slave}}$ \textbf{1} geschrieben. Analog wird bei
+$Q_{\text{Master}}=0$ \textbf{0} geschrieben. Dies sind die
+einzigen beiden Möglichkeiten, da $Q_{\text{Master}} \ne
+\NOT{Q_{\text{Master}}}$ ($\rightarrow$ kein Speicherzustand oder
+verbotener Zustand).\\\\Um Informationen die an den Jump- und
+Kill-Eingängen des JK-MS-FF anliegen zu verarbeiten, benötigt man
+zuerst den negativen Taktzustand $\NOT{T}=1$ um diese in den
+Master zu schicken. Danach wird aber noch der positive Taktzustand
+$\NOT{T}=0$ benötigt um die Informationen auch vom Slave
+verarbeiten zu lassen. Erst nach beiden Taktzuständen in dieser
+Reihenfolge können die Informationen von ganz vorne ($J$,$K$) zu
+den Ausgängen ($Q$, $\NOT Q$) des JK-MS-FF gelangen. Betrachtet
+man nun wieder das JK-MS-FF als Ganzes reicht also nicht mehr das
+Anliegen eines bestimmten Taktzustandes, statt dessen benötigen
+wir beide Taktzustände in festgelegter Reihenfolge, erst negativ
+$\NOT{T}=1$ und danach positiv $\NOT{T}=0$. Dies entspricht wie
+oben festgestellt der positiven Taktflanke. Dieser Aspekt, dass
+für die Verarbeitung der Informationen beim JK-MS-FF erst der
+negative und danach der positive Taktzustand benötigt wird, lässt
+uns von einem positiv taktflankengesteuerten Flip-Flop sprechen.
+Ohne die zwischen den beiden RST-FFs in der Taktleitung eingebaute
+\emph{NOT}-Verknüpfung würden beide Stufen (Master sowie Slave)
+auf den gleichen Taktzustand reagieren und die Ein- und Ausgänge
+wären nicht entkoppelt.
+\begin{equation*}
+\begin{array}{ccc|cc|l}
+J & K & \text{Taktflanke} & Q_{n+1} & \NOT{Q}_{n+1}&\\
+\hline
+0 & 0 & + & Q_n & \NOT{Q_n} & \text{keine Änderung (speichern)}\\
+0 & 0 & - & Q_n & \NOT{Q_n} & \text{Falsche Taktflanke $\Rightarrow $keine Änderung}\\
+0 & 1 & + & 0 & 1 & \text{setze \textbf{0}}\\
+0 & 1 & - & Q_n & \NOT{Q_n} & \text{Falsche Taktflanke $\Rightarrow $keine Änderung}\\
+1 & 0 & + & 1 & 0 & \text{setze \textbf{1}}\\
+1 & 0 & - & Q_n & \NOT{Q_n} & \text{Falsche Taktflanke $\Rightarrow $keine Änderung}\\
+1 & 1 & + & \NOT{Q}_n & Q_n & \text{toggeln}\\
+1 & 1 & - & Q_n & \NOT{Q_n} & \text{Falsche Taktflanke $\Rightarrow $keine
+Änderung}
+\end{array}
+\end{equation*}
+Bei den bisher nicht angesprochenen Eingängen
+$\NOT{\textnormal{\textbf{P}reset}}$ und
+$\NOT{\textnormal{\textbf{C}lear}}$ handelt es sich um parallele
+Eingänge, mit welchen man den Ausgangszustand direkt und damit
+völlig unabhängig vom Takt beeinflussen kann. Damit "`normales"'
+Schalten möglich ist, müssen sowohl $\NOT{P}$ als auch $\NOT{C}$
+auf \textbf{1} liegen, da sonst der Ausgang immer direkt
+festgelegt ist. Dies ist z.B. gewährleistet, wenn man diese
+Eingänge "`offen"' lässt (wie schon erwähnt: Offene Eingänge
+gelten als mit \textbf{1} belegt).\\ \\
+
+\textbf{Hinweis:} Das Master RST-FF sowie das Slave RST-FF sind
+taktzustandsgesteuert. Durch die Negierung in der Taktleitung
+reagieren sie auf unterschiedliche Taktzustände. Da, um mit den
+Eingängen die Ausgangszustände zu manipulieren, erst der Master
+und danach der Slave aktiv werden müssen, ist die Reihenfolge der
+benötigten Taktzustände fest und das "`Vorzeichen"' der Taktflanke
+bestimmt. In unserem Fall wird für den Informationstransport durch
+das JK-MS-FF der negative Taktzustand ($\NOT{T} =
+\text{\textbf{1}}$) gefolgt vom positiven ($\NOT{T} =
+\text{\textbf{0}}$) benötigt. Liegt der negative Taktzustand
+($\NOT{T} = \text{\textbf{1}}$) vor, kann durch Hin- und
+Herschalten der Eingänge die im Master gespeicherte Information
+verändert werden, der Ausganzustand des gesamten FFs wird jedoch
+durch die Belegung der Eingänge erst im Moment des Übergangs zum
+positiven Taktzustand ($\NOT{T} = \text{\textbf{0}}$) festgelegt.
+Im Moment der negativen Taktflanke (postive Flanke von $\NOT{T}$)
+wird jedoch der Ausgangszustand des JK-MS-FF nicht durch die 
+Stellung der Eingänge beeinflusst.\\ \\
+\textbf{Achtung:} Auf den Anschlusskappen des JK-MS-FFs sind die
+parallelen Eingänge fälschlicherweise mit Preset ($P$) statt mit
+$\NOT{\textnormal{Preset}}$ ($\NOT{P}$) und Clear ($C$) an Stelle
+von $\NOT{\textnormal{Clear}}$ ($\NOT{C}$) beschriftet. Gleiches
+gilt auch für den Takteingang.
+\subsection*{Fragen}
+\begin{itemize}
+    \item Wie entsteht der verbotene Zustand des RS-Flip-Flops?
+    Warum ist er verboten?
+    \item Wie kann der verbotene Zustand beim RST-Flip--Flop umgangen
+    werden?
+    \item Was versteht man unter dem "`Prellen"' eines Schalters
+    und wie kann es umgangen werden?
+    \item Was sind die besonderen Eigenschaften des JK-MS-FF?
+    \item Wie wird beim JK-MS-FF der verbotene Zustand
+        verhindert?
+    \item Wozu wird die Taktleitung zwischen Master und Slave
+    invertiert und was bewirkt man damit?
+    \item Was ist der Unterschied zwischen
+        Taktzustandssteuerung und Taktflankensteuerung?
+    \item Um welche Art von Taktsteuerung würde es sich
+        handeln, falls die Negierung in der Taktleitung
+        zwischen Master und Slave nicht vorhanden wäre?
+\end{itemize}
+
+\section{Schieben, Multiplizieren und Rotieren}
+\subsection*{Unterschiede: Serielle- Parallele- Verarbeitung}
+Größere Datenmengen werden zur Bearbeitung normalerweise in Blöcke
+zerlegt, welche entweder in verschiedenen Kanälen gleichzeitig
+(parallel) oder in einem einzigen Kanal nacheinander (seriell)
+verarbeitet werden. Bei seriellen Verfahren kommt man im
+allgemeinen mit deutlich weniger Bauteilen aus, jedoch ist die
+Geschwindigkeit stark begrenzt. Um zwischen den Verfahren wechseln
+zu können, werden Seriell-Parallel-Wandler (und entsprechen auch
+Parallel-Seriell-Wandler) benötigt. Das Schieberegister der
+nächsten Aufgabe stellt einen einfachen Seriell-Parallel-Wandler
+da. Am D-Eingang können Daten nacheinander (seriell) eingegeben
+werden und an den LEDs gleichzeitig (parallel) ausgelesen werden.
+\subsection{4-Bit-Schieberegister}
+Ein $n$-Bit-Schieberegister besteht aus $n$ hintereinander
+geschalteten JK-MS-FFs bei denen jeweils \textbf{J} auf \textbf{Q}
+des vorangehenden Flip-Flops angeschlossen ist. Analog wird immer
+$\textbf{K}_{m}$ auf $\NOT{Q}_{m-1}$ geklemmt. Somit werden bei
+jeder positiven Taktflanke (entspricht der negativen Flanke von
+$\NOT{T}$) Informationen genau ein JK-MS-FF weitergeschoben. Der
+Kill-Eingang des ersten JK-MS-FFs sollte über ein \emph{NOT} mit
+dessen Jump-Eingang verknüpft werden, so dass als
+Eingabeinstrument ein einfacher Schalter oder Taster ausreichend
+ist (siehe Data-Flip-Flop). Da es hier jedoch leicht zum Prellen
+des Schalters und damit zum versehentlichen Weiterschieben gleich
+um mehrere Stellen kommen kann, sollte entweder der Schalter
+entprellt, oder für das Taktsignal der Taktgeber des Schaltboards
+verwendet werden:
+\begin{center}\includegraphics[width=10cm]{Bilder/Taktgeber.jpg}\end{center}
+Über den Ausgang $F/16$ gibt das Experimentierboard ein Taktsignal
+mit einer Frequenz von ca. $\unit[1]{Hz}$ aus.\\
+Über die Preset- ($\NOT{P}$) und Clear-Eingänge ($\NOT{C}$) können
+parallel die im Register gespeicherten Informationen verändert
+werden. Fasst man die im Schieberegister gespeicherte Information
+als Binärzahl auf, so kann man multiplizieren und dividieren. Bei
+einer Binärzahl ist der n-ten Stelle der Wert $2^{n-1}$
+zugeordnet. Daher entspricht das Schieben in Richtung des
+höchstwertigen Bits einer Multiplikation mit $2$ und das Schieben
+in Richtung des niederwertigsten Bits einer Division durch $2$.
+Mit dieser Schaltung ist jedoch nur das Schieben in eine Richtung
+möglich (im Schaltbild nach rechts).
+\begin{center}\includegraphics[width=15cm]{Schaltplaene/51_Schieberegister.pdf}\end{center}
+
+\subsection{4-Bit-Rotationsregister}
+Koppelt man den Ausgang des letzten JK-MS-FFs eines
+Schieberegisters $Q_n$ auf den Eingang D rück, so hat man das
+Schieberegister in ein Rotationsregister umgewandelt. Bei jeder
+positiven Taktflanke (entspricht der negativen Flanke von
+$\NOT{T}$) werden die Informationen im Kreis um eine Stelle
+weitergeschoben. Mit den Set- und Preset-Eingängen können nun
+parallel Werte für $Q_A Q_B Q_C Q_D$ gesetzt werden.
+\begin{center}\includegraphics[width=15cm]{Schaltplaene/52_Rotationsregister.pdf}\end{center}
+Rotationsregister finden unter Anderem in Lauflichtern
+Verwendung, da hier eine gespeicherte Bitfolge endlos wiederholt
+ausgegeben werden muss.\\\\
+\textbf{Hinweis:} Dass das Rotationsregister sich besonders gut
+zur Seriell-Parallel-Wandlung eignet, ist falsch, da es gar keinen
+seriellen Eingang hat. Das Schieberegister hingegen erfüllt mit
+seinem seriellen Eingang und parallelen Ausgang diese Aufgabe sehr
+gut.
+
+\subsection*{Fragen}
+\begin{itemize}
+    \item Wozu lässt sich das Schieberegister verwenden?
+    \item Welches Problem kann auftreten, wenn das Taktsignal
+        über einen gewöhnlichen Schalter eingegeben wird?
+    \item Lässt sich das Rotationsregister auch ohne die \emph{NOT}-Verknüpfung am ersten JK-MS-FF verwirklichen?
+\end{itemize}
+
+\section{Zähler}
+\subsection{4-Bit-Asynchronzähler}
+% 6.1 4-Bit Asynchronzähler
+\begin{equation*}
+\begin{array}{c|cccc}
+\text{Clk} & Q_D & Q_C & Q_B & Q_A\\
+\hline
+0 & 0 & 0 & 0 & 0\\
+1 & 0 & 0 & 0 & 1\\
+2 & 0 & 0 & 1 & 0\\
+3 & 0 & 0 & 1 & 1\\
+4 & 0 & 1 & 0 & 0\\
+5 & 0 & 1 & 0 & 1\\
+6 & 0 & 1 & 1 & 0\\
+7 & 0 & 1 & 1 & 1\\
+8 & 1 & 0 & 0 & 0\\
+9 & 1 & 0 & 0 & 1\\
+\textbf{10} & \textbf{1} & \textbf{0} & \textbf{1} & \textbf{0}\\
+11 & 1 & 0 & 1 & 1\\
+12 & 1 & 1 & 0 & 0\\
+13 & 1 & 1 & 0 & 1\\
+14 & 1 & 1 & 1 & 0\\
+15 & 1 & 1 & 1 & 1\\
+\end{array}
+\end{equation*}
+Ein Asynchronzähler besteht aus mehreren hintereinander
+geschalteten JK-MS-Flip-Flops, bei denen jeweils der Ausgang $Q$
+an den $\NOT{T}$-Eingang des nachfolgenden angeschlossen wurde.
+Die Jump- und Kill-Eingänge aller Flip-Flops sind offen, folglich
+liegt an ihnen \textbf{1}, somit arbeiten alle FFs im
+Toggle-Betrieb. Da jedes JK-MS-FF taktflankengesteuert ist, werden
+an jedem Flip-Flop zwei Änderungen des Taktes benötigt um eine
+Änderung des Ausganges herbeizuführen. Es werden also am n-ten
+JK-MS-FF zwei negative Flanken von $\NOT{T}_n$ benötigt um in den
+negierten Takteingang des (n+1)-ten $\NOT{T}_{n+1}$ FFs eine
+negative Flanke einzugeben. Hierdurch halbiert sich nach jedem
+Flip-Flop der Takt. Diese Verfahren ist die einfachste Art von
+Zähler, es wird jedoch, da jede Stufe mit einem anderen Takt
+arbeitet, \textbf{asynchron} gezählt.
+\begin{center}\includegraphics[width=15cm]{Schaltplaene/61_4-Bit_Asynchronzaehler.pdf}\end{center}
+Dies bringt Probleme mit sich: Da jedes Flip-Flop eine gewisse
+Zeit zum Umschalten braucht, wird der Zähler mit jeder weiteren
+Stufe immer ungenauer, da sich der Takt nicht nur halbiert,
+sondern sich noch zusätzlich in jeder Stufe die Laufzeit durch ein
+JK-MS-FF hinzuaddiert. Um einen präzisen Zähler mit sehr vielen
+Stufen zu bauen ist dieses Verfahren daher gänzlich ungeeignet.
+\begin{center}\includegraphics[height=4cm]{Bilder/zaehler.pdf}\end{center}
+An obigem Schaubild lässt sich sehr gut die Flankensteuerung der
+JK-MS-FFs erkennen. Diese reagieren nur auf positive Taktflanken,
+was negativen Flanken von $\NOT{T}$ entspricht (siehe Abschnitt:
+JK-MS-FF). Beim Hintereinanderschalten mehrerer JK-MS-FFs ist es
+viel sinnvoller immer nur das $\NOT{T}$-Verhalten zu betrachten,
+da wir den $Q$-Ausgang jeder Stufe ja an den $\NOT{T}$ Eingang der
+nächsten anschließen. Leicht lässt sich erkennen, dass jede Stufe
+mit der halben Frequenz der vorangehenden Stufe arbeitet.\\
+\textbf{Hinweis:} Der Asynchronzähler reagiert nur auf negative
+Flanken von $\NOT{T}$. Positive Flanken von $\NOT{T}$ führen zu
+\textbf{keiner} Änderung des Ausgangszustandes.
+
+\subsection{Asynchroner Dezimalzähler}
+Ein binärer 3-Bit-Zähler zählt von 0 bis 7, also 8 Stufen, ein
+ binärer 4-Bit-Zähler zählt von 0 bis 15, also 16 Stufen. Um
+somit mit einem binären Zähler dezimal zählen zu können, wird ein
+4-Bit-Zähler benötigt der beim Erreichen der Zahl 10 auf 0
+zurückgesetzt wird. Zuerst muss man anhand obiger Tabelle ablesen
+wie die dezimale Zahl 10 binär codiert wird:
+$$\textnormal{Dezimal:}~10~~~\Longleftrightarrow~~~\textnormal{Binär:}~1010$$
+Da wir nur vorwärts zählen ist es völlig ausreichend, das
+viert-niedrigste und das zweit-niedrigste Bit mit \emph{NAND} zu
+verknüpfen und dies auf die Clear-Eingänge der JK-MS-FFs zu geben
+(Achtung: Die Clear-Eingänge sind invertiert $\NOT{C}$, daher
+\emph{NAND} statt \emph{AND}). Es lässt sich einfach die vorige
+Schaltung um diese Verknüpfung erweitern.
+\begin{center}\includegraphics[width=15cm]{Schaltplaene/62_Dezimaler_Asynchronzaehler.pdf}\end{center}
+Bei einem Zähler, welcher sowohl vorwärts wie rückwärts zählen
+soll, wäre dies nicht ausreichend. Hier müssten wir das niedrigste
+und das dritt-niedrigste Bit \emph{NOR} verknüpfen, sowie das
+zweit-niedrigste, das viert-niedrigste und den Ausgang dieser
+\emph{NOR}-Verknüpfung mit \emph{NAND} verknüpfen und auf die
+Clear-Eingänge geben. So würde auch beim Abwärtszählen genau bei
+der Dezimalzahl 10 resettet werden.\\ \\
+Falls die Synchronzähler nicht aufgebaut werden, empfiehlt es sich
+den Aufbau stecken zu lassen und direkt mit Aufgabe 7
+weiterzumachen, da sie sehr schnell durchzuführen ist.
+
+\subsection{4-Bit-Synchronzähler}
+Um einen präzisen Zähler zu verwirklichen, müssen alle Stufen mit
+dem gleichen Takt betrieben werden, daher \textbf{Synchronzähler}.
+Um das binäre Zählen zu gewährleisten, muss eine Stufe immer mit
+der halben "`Geschwindigkeit"' laufen wie die vorangehende (vom
+niedrigsten zum höchsten Bit aus gesehen). Dies lässt sich
+erreichen, indem man an jeder Stufe die Ausgänge aller
+vorangehenden Stufen mit \emph{UND} verknüpft und dies an
+\textbf{J}ump und \textbf{K}ill anschließt um das Toggeln zu
+aktivieren. Hierdurch erhält diese Stufe das gleich Taktsignal wie
+alle anderen (synchron), toggelt aber nur dann, wenn alle
+vorangehenden gerade auf \textbf{1} stehen.
+\begin{center}\includegraphics[width=15cm]{Schaltplaene/63_Dualer_Synchronzaehler.pdf}\end{center}
+Der Schaltungsaufwand lässt sich reduzieren, indem man einfach die
+Ausgänge der letzten und vorletzten Stufe \emph{UND} verknüpft und
+diese an \textbf{J}ump und \textbf{K}ill anlegt. Jump und Kill der
+zweit-niedrigsten Stufe kann direkt, ohne logische Verknüpfung an
+den Ausgang der niedrigsten angeschlossen werden. Hierdurch
+erreicht man das gleiche, wie im vorigen Vorschlag, nur sind so
+die Verknüpfungen gestaffelt. Bei sehr schnellen und sehr langen
+Zählern kann es jedoch durch die von den Schaltzeiten der
+\emph{UND}-Verknüpfung resultierenden Verzögerungen zu Fehlern
+kommen. Normalerweise (und auch hier im Praktikum) ist dies jedoch
+kein Problem.
+
+
+\subsection{Synchroner Dezimalzähler}
+Der Synchronzähler ließe sich, analog zum Asynchronzähler in 6.2,
+sehr leicht zum Dezimalzähler erweitern, indem man das höchste und
+das zweitniedrigste Bit \emph{UND}-verknüpft und dies auf die
+Clear-Eingänge der Flip-Flops gibt. Diese Vorgehensweise ist für
+die erfolgreiche Durchführung des Versuchs vollkommen ausreichend.
+Eine viel elegantere Lösung ist jedoch den invertierten Ausgang
+des höchsten Bits $\NOT{Q}_D$ mit dem Ausgang des niedrigsten
+$Q_A$ \emph{UND} zu verknüpfen und dies auf Jump $J_B$ und Kill
+$K_B$ des zweitniedrigsten Flip-Flops zu geben. Außerdem wird
+$Q_A$ auf den Kill-Eingang des höchsten Bits $K_D$ gelegt. Beim
+Zählen von $0$ bis $7$ hat dies keine Auswirkung, da das höchsten
+Bit hier \textbf{0} ist und somit sein invertierter Ausgang die
+ganze Zeit auf \textbf{1} liegt. Da \textbf{A} \emph{AND}
+\textbf{1} $\Leftrightarrow$ \textbf{A} wird in diesem Bereich
+genau so wie beim normalen Synchronzähler gezählt. Der Übergang
+auf die dezimale $8$ ist ebenfalls kein Problem, es liegt vom
+dritt-niedrigsten Bit \textbf{1} an Jump $J_D$ und von der gerade
+beschriebenen Verknüpfung ebenfalls \textbf{1} an Kill $K_D$ des
+höchsten Bits an, dieses Bit wird also getoggelt. Nun ist das
+höchsten Bit \textbf{1} und an seinem invertierenden Ausgang
+$\NOT{Q}_D$ liegt \textbf{1}. Die gerade beschriebene Verknüpfung
+ist nun: \textbf{A} \emph{AND} \textbf{0} $\Leftrightarrow$
+\textbf{0}. Somit kann nur noch das niedrigste Bit beim nächsten
+Takt toggeln (ergibt die $9$), das zweitniedrigste jedoch nicht
+mehr. Stattdessen wird beim Erreichen der $9$ auch über den
+Ausgang dieser Verknüpfung eine \textbf{1} auf Kill des höchsten
+Flip-Flops $K_D$  übertragen, da an dessen Jump $J_D$ aber noch
+\textbf{0} anliegt, wird dieses Bit auf \textbf{0} gesetzt. Somit
+springt der Zähler von der $9 \leftrightarrow 1001$ im nächsten
+Takt auf $0 \leftrightarrow 0000$ zurück.
+\begin{center}\includegraphics[width=15cm]{Schaltplaene/64_Dezimaler_Synchronzaehler.pdf}\end{center}
+Diese Anschlussvariante würde also auch ohne Clear-Eingänge
+auskommen. Es empfiehlt sich die Schaltung aufgebaut zu lassen, da
+sie sehr leicht in den Aufbau aus Aufgabe $7$ erweitert werden
+kann.
+\subsection*{Fragen}
+\begin{itemize}
+    \item Was ist beim Asynchronzähler asynchron?
+    \item Wie könnte man den Asynchronzähler rückwärts zählen
+    lassen (angenommen vor Eingabe des Taktsignals seien alle FFs über $P_A \dots P_D$ auf \textbf{1} gesetzt worden)?
+    \item Wozu wird das NAND beim asynchronen Dezimalzähler
+    benötigt?
+    \item Wie könnte man aus dem asynchronen Zähler (6.1) einen
+    Oktalzähler machen?
+    \item Wozu benötigt man die ANDs beim synchronen 4-Bit-Zähler?
+    \item Wie viele ANDs bräuchte man für einen synchronen 5-Bit-Zähler und wo würde man die/das zusätzliche einbauen?
+\end{itemize}
+
+\section{Digital-Analog-Wandlung}
+Die am Dezimalzähler aus (6.2 bzw. 6.4) digital ausgegebene Zahl
+($0 \dots 9$) soll nun mittels eines Drehspulenmessinstruments
+analog gewandelt werden. Der Ausschlag der Nadel des Messgerätes
+soll also proportional zur aktuell am Zähler angezeigten Zahl
+sein. Gemessen wird im $\mu A$--Bereich wobei ein Maximalstrom von
+$\unit[90]{\mu A}$ nicht überschritten werden darf (90\% von
+$\unit[100]{\mu A}$). Dieser Strom soll bei Erreichen der höchsten
+Stelle (9) fließen. Daraus folgt, dass sich in jedem Zählschritt
+der Strom um $\unit[90]{\mu A}/9 = \unit[10]{\mu A}$ erhöhen soll.
+Ist also die Einerstelle des Zählers auf \textbf{1}, sollen
+$\unit[10]{\mu A}$ durch einen noch zu berechnenden, daran
+angeschlossenen Widerstand $R_1$ fließen. Bei einer
+Ausgangsspannung der ICs von ca. $\unit[4]{V}$ entspricht das
+einem Widerstand von:
+$$R_1 = \frac U I = \frac{\unit[4]{V}}{\unit[10]{\mu A}} =
+\unit[400]{k \Omega}$$ An der Zweierstelle $Q_B$ soll der doppelte
+Strom fließen, demnach muss der hier angeschlossene Widerstand
+halb so groß sein wie der an $Q_A$: $R_2 = \unit[4]{V} /
+\unit[20]{\mu A} = \unit[200]{k \Omega}$ usw. für die höheren
+Stellen. Auf dem Experimentierboard sind die benötigten
+Widerstände bereits in einer Reihe aufgebaut:
+\begin{center}\includegraphics[width=5cm]{Bilder/Widerstaende.jpg}\end{center}
+Mit dem Multimeter lässt sich leicht der Widerstand dieser
+bestimmen:
+\begin{equation*}
+\begin{array}{r|r|r|r|r}
+\textnormal{Widerstand} & \textnormal{Strom} & \textnormal{Bit} &\textnormal{Binärzahl} &\textnormal{Dezimalzahl}\\
+\hline
+\unit[400]{k\Omega} & \unit[10]{\mu A} & \textnormal{niedrigstes} & 0001 & 1\\
+\unit[200]{k\Omega} & \unit[20]{\mu A} & \textnormal{zweitniedrigstes} & 0010 & 2\\
+\unit[100]{k\Omega} & \unit[40]{\mu A} & \textnormal{drittniedrigstes} & 0100 & 4\\
+\unit[50]{k\Omega} & \unit[80]{\mu A} &
+\textnormal{viertniedrigstes} & 1000 & 8
+\end{array}
+\end{equation*}
+Somit lässt sich Digital-Analog-Wandlung sehr einfach durchführen,
+indem man den Ausgang des niederwertigsten Bits an den größten
+(bei uns den obersten), jedes weitere Bit an den nächst kleineren
+Widerstand anschließt. Die anderen Enden der Widerstände schließt
+man parallel an den Pluspol des Multimeters an, den Minuspol an
+Masse. Nun repräsentiert der Strom durch das Multimeter die
+analoge "`Übersetzung"' der digitalen Zahl des Zählers.\\\\
+Generell stellt man fest, das der Maximalstrom nur knapp
+$\unit[75]{\mu A}$ anstelle der erwarteten $\unit[90]{\mu A}$
+entspricht. Dies liegt daran, dass die Spannungsversorgung der
+Experimentierboards niedriger ist als im Aufgabentext angegeben.
+Daher ist auch die Ausgangsspannung der ICs niedriger als
+$\unit[4]{V}$. Die Stromzunahme ist mit ca. $\unit[7,5]{\mu A}$
+pro Zählschritt dennoch fast linear.
+\begin{center}\includegraphics[width=15cm]{Schaltplaene/70_Dezimaler_Synchronzaehler_-_Digital-Analogwandlung.pdf}\end{center}
+Durch die großen Unterschiede der Widerstände begrenzen deren
+Fehler die Genauigkeit des DA-Wandlers. Da die Widerstände immer
+prozentuale Abweichungen aufweisen, sind die Fehler des größten
+Widerstandes in der Größenordnung des kleinsten Widerstandes.
+Daher verwendet man normalerweise keine DA-Wandler mit stark
+unterschiedlichen Widerständen, stattdessen kann man durch
+Aufteilen des Stromes auch mit gleichen Widerständen sehr große
+Bereiche abdecken ($\Rightarrow$ R2R-Kette).
+\subsection*{Fragen}
+\begin{itemize}
+    \item Warum können wir nicht einfach alle Ausgänge $Q_A
+        \dots Q_D$ verbinden und dann die Ausgangspannung
+        messen?
+    \item Addieren sich die Ströme der einzelnen Stufen oder ihre Spannungen?
+    \item An welche LED muss der größte Widerstand angeschlossen werden?
+    \item Wieso müssen die Widerstände von einer zur nächsten
+    Stufe immer halbiert werden?
+    \item Liest überhaupt irgend jemand diese Fragen?
+\end{itemize}
+\subsection*{Schlusswort}
+Vielen Dank an Bastiaan Hovestreydt für die ausführliche
+Fallunterscheidung beim Subtrahierer und auch an Herrn Dr. Blüm
+für das Korrekturlesen.\\
+Kritik, Verbesserungsvorschläge und Korrekturen bitte an
+mail@christian-benz.de oder mail@christianbarth.com schicken.
+\end{document}

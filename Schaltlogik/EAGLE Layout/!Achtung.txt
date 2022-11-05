@@ -1,0 +1,11 @@
+Falls ihr unsere Schaltskizzen mit EAGLE verwenden wollt: 
+
+Das Ergebnis sieht eventuell anders aus als in unseren
+fertigen PDF-Dateien da hier mit Adobe Acrobat noch Text
+hinzugefügt/bearbeitet wurde und einige Symbole entfernt
+wurden. Beispielsweise die Invertierungen der Eingänge
+einiger Schaltungen wurden erst im Nachhinein geändert
+und stimmen daher nicht mit den EAGLE-Layouts überein.
+Daher ist eine Verwendung dieser nicht unbedingt 
+empfehlenswert. Alle relevanten Schaltbilder liegen im
+pdf-, gif- und png-Format vor.
