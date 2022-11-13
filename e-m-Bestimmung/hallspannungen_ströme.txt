@@ -1,6 +1,0 @@
-# Messung der Hallspannungen an den vorgesehenen Stellen für die Spulenströme                       
-# Spulenstrom in A   Hallspannung in V
-  1.0                9.46
-  1.5                9.71
-  2.0                11.72
-  
