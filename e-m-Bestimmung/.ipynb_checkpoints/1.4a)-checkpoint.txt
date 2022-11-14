@@ -1,0 +1,12 @@
+Abhängigkeit der Anodenspannung (z.B. 100; 125; ... 250V) bei zwei Spulenströmen 
+#1A 
+#Annodenspannung in V und Radius bei 1A und Radius bei 2 A 
+     250                  11.06                    
+     225                  17.06     
+     200                  21.75
+     175                  30.00
+     150                  36.56
+     125                  50.06
+     100                  60.75
+     
+  

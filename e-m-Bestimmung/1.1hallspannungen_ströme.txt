@@ -1,7 +1,16 @@
 # Messung der Hallspannungen an den vorgesehenen Stellen für die Spulenströme 
 #Hallspannung bei verschiedenen Strömen
-# Hallspannung in V bei 1 A, bei 1.5 A, bei 2.0 A   
-                      5.0        7.0          4.0
-                      7.5        9.715        5.0
-                      3.0        11.72        89.0
-  
+# oben nach unten danach links nach rechts
+# Hallspannung in mV bei 0.978 A, bei 1.504 A, bei 2.014 A   
+                      23.44          37.31            49.50
+                      25.5           40.13            53.25
+                      25.87          41.06            54.56
+                      25.87          41.25            54.94
+                      26.06          41.25            54.94
+                      26.06          41.06            54.96
+                      25.12          39.19            51.94
+                      21.19          33.38            44.06
+                      25.87          40.50            53.81
+                      26.62          41.63            54.94
+                      26.81          42.00            54.38
+                      26.81          41.44            53.81
