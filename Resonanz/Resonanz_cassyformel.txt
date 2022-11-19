@@ -1,0 +1,5 @@
+Cassy-Formel für den el. Schwingkreis:
+
+f0+(t<>0 and n<>1)*(f1-f0)*(1+sgn(last n-n0)*(10^(abs(last n-n0)/n0)-1)/9)
+
+f2<5*f1 and f2<3000 and delta t>2/f2+2
