@@ -1,0 +1,20 @@
+# Schirm bei 1.31 m Bild bei 0.35m
+#Licht Fokusierung F1 in m Fokusierung F2 in m 
+ blau innen       0.535            1.122
+ blau innen       0.54             1.125
+ blau innen       0.546            1.125
+ blau innen       0.543            1.126
+ blau außen       0.533            1.131
+ blau außen       0.533            1.133
+ blau außen       0.535            1.129
+ blau außen       0.534            1.134
+ rot innen        0.546            1.119
+ rot innen        0.535            1.123
+ rot innen        0.541            1.12
+ rot innen        0.545            1.125
+ rot außen        0.541            1.131
+ rot außen        0.54             1.13
+ rot außen        0.541            1.125
+ rot außen        0.537            
+
+     

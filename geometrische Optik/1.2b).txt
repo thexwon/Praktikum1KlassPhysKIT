@@ -1,0 +1,21 @@
+# Schirm bei 1.54 m Bild bei 0.35m
+# ersten vier Werte blau innen, danach vier Werte blau außen, dann vier Werte rot innen, dann vier Werte rot außen
+#Licht Fokusierung F1 in m Fokusierung F2 in m 
+0.539            1.392
+0.54             1.385
+0.537            1.406
+0.541            1.396
+0.536            1.399
+0.537            1.401
+0.538            1.397
+0.535            1.396
+0.546            1.404
+0.539            1.398
+0.544            1.396
+0.540            1.393
+0.544            1.406
+0.541            1.396
+0.539            1.401
+0.536            1.410
+
+     

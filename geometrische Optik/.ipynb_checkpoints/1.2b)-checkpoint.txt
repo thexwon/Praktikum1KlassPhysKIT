@@ -1,0 +1,12 @@
+Abhängigkeit vom Spulenstrom (z.B. 1,0; 1,2; ... 2,0A) bei zwei Anodenspannungen (160V und 250V) 
+# 
+#Spulenstrom in A und Radius in cm bei 160V    Spulenstrom in A und Radius in cm bei 250V
+     1.008         9.3                         0.981            12.9
+     1.162         8.1                         1.180            10.2
+     1.424         6.7                         1.419            8.5
+     1.595         5.5                         1.590            7.2
+     1.792         5.4                         1.810            6.8
+     1.991         4.7                         1.989            6.5
+  
+
+     

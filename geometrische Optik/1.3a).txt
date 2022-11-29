@@ -1,0 +1,12 @@
+# Linsenabstand = 6cm
+# x = Abstand Linse Bild
+# Abbildungsverhältnis = Abbl.
+# x in m Abbl. Abbl.'
+0.13     16    12
+0.14     13    11
+0.15     10    11
+0.16     11    10
+0.17     10    8
+0.18     11    8
+
+     
