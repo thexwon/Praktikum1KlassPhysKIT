@@ -1,0 +1,4 @@
+##Amplitude Widerstand in V,Amplitdude Spulespannung in V,  Phasenverschiebung in ms bei 303.3mA
+(6.15+6.103)/2, (4.378+4.354)/2 , 2.83
+##Amplitude Widerstand in mV,Amplitdude Spulespannung in mV,  Phasenverschiebung in ms bei 31mA
+(631.5+631.5)/2, (448.4+444.8)/2 , 2.83 

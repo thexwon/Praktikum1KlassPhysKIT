@@ -1,0 +1,7 @@
+#Vorwiderstand auf Kanal B auf 10MOhm erhöht von 1 Mohm, daher Signalabschwächung um faktor 10
+#Spulenspannung in V,Widerstandspannung in mV, Zeitdifferenz in ms bei 10.08 mA
+(2.077+2.124)/2 , (147.7+144.1)/2 , 5.932
+
+#Spulespannung in V,Widerstandspannung in mV, Zeitdifferenz in ms bei 21.98 mA
+(9.131+9.225)/2 , (302.8+304)/2 , 3.537
+
