@@ -1,0 +1,7 @@
+#Minima, Maxima, Gewicht in g bei 10mA, Papiermasse bei 40Vx100V:
+
+(-144mV,-30.16mV), (144mV,30.99mV),0.2860,0.029
+
+Minima, Maxima, Gewicht bei 22mA,Papiermasse bei 40Vx10V
+
+(-304.3mV,-130.5mV), (303.1mV,124.9mV),0.4026,0.029

@@ -1,0 +1,4 @@
+#Remanenz, Koerzitiv, Gewicht in Gramm, Papiergewicht bei 1Vx0.2V bei Eisenkern, 260mA ging nicht höher
+356.8mV, 1.72V,0.4002 ,0.0279
+#Remanenz, Koerzitiv, Gewicht in Gramm ,Papiergewicht bei 0.1Vx0.04V bei Eisenkern, 25mA
+22.07mV, 51.45mV,0.248 , 0.0279
