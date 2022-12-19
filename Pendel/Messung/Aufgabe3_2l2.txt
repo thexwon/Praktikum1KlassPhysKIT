@@ -1,0 +1,6 @@
+#kopplungslänge= 45.3cm
+# Anzahl Perioden Zeit gleichphasig         Zeit gegenphasig in s
+3         5.26                3.48
+5         8.72                6.03
+7         12.07               8.62
+9         15.81               11.13

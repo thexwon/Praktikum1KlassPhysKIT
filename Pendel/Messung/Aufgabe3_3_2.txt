@@ -1,0 +1,5 @@
+#Gewicht in g Auslenkung in cm
+100  6
+200  10
+500  20
+

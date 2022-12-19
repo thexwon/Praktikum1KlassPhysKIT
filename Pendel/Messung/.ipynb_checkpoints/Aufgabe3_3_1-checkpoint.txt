@@ -1,0 +1,7 @@
+#Messung der Periodendauer von einem der gekoppelten Pendel während der Schwebung
+#Anzahl der Perioden Zeit in s
+3      5.
+5
+7
+9
+

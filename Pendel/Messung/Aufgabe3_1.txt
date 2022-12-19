@@ -1,0 +1,8 @@
+#Abstand zwischen Drehachse und Massenscheibe      80.6cm
+#Gesamtlänge des Stabes 110cm
+#Gewicht Massenscheibe  1221g
+# Anzahl Perioden  Zeit linkes Pendel in s Zeit rechtes Pendel in s
+3        05.05     05.04
+5        08.63     08.80
+7        11.93     12.15
+9        15.75     15.71
