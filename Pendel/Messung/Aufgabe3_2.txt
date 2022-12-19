@@ -1,0 +1,2 @@
+# verwendete Periodendauer T0=
+#bei l Periodendauer T1 Periodendauer T2    bei l' Periodendauer T1 Periodendauer T2
