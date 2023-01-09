@@ -1,0 +1,3 @@
+#offset P=12Pa noch herausrechnen
+#Scheibensonde parallel Scheibensonde senkrecht Rohrsonde parallel Rohrsonde senkrecht P in Pa 
+104                       21                      112                 18

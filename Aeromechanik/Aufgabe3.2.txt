@@ -1,0 +1,8 @@
+# 2600 Umdrehungen/min 
+# Offset 12Pa
+#Winkel in Grad; Druck bei Loch 1 ; 2; 3; 4; 5; 6; 7; 8; 9
+#Bei 0 überall Unterdruck
+#Bei -20 
+0 109 -45 -49 -30 -22 -60 -25 -10 -11 
+20 105 -70 -54 -26 -20 25 19 18 16
+-20 66 50 -17 -20 -15 -22 -19 -16 -13

@@ -1,0 +1,4 @@
+#Offset 0N
+#2600 Umdrehungen/min
+#Kraft bei Kugel, Halbkugel(rund),Halbkugel(flach), Stromlinienkörper(spitz),Stromlinienkörper(flach) in N
+0.08 0.0115 0.32 0.06 0.03

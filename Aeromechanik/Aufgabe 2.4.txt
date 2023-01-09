@@ -1,0 +1,5 @@
+#Offset 0.02N
+#Unteres Rechteck 0.026*0.012, oberes Rechteck 0.018*
+#2600 Umdrehungen/min
+#Kraft auf Modelauto in N
+0.05
